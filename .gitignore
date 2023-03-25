@@ -1,0 +1,12 @@
+/target
+zig-cache
+zig-out
+build.zig
+*.log*
+.cache
+.output
+.env
+.DS_Store
+.code-workspace
+.sublime-project
+.sublime-workspace
