@@ -66,7 +66,7 @@ PlayerBundle :: struct #packed {
 
 EnemyEntity :: struct {}
 
-EntityName :: struct(name: string) {}
+EnemyName :: struct(name: string) {}
 
 EnemySprite :: struct {
     player_sprite_id: string,
@@ -75,7 +75,7 @@ EnemySprite :: struct {
 EnemyBundle :: struct #packed {
     // removed padding between the fields
     entity:   EnemyEntity,
-    name:     EntityName("PlayerEntity"),
+    name:     EnemyName("EnemyEntity"),
     position: EntityPosition,
     health:   EntityHealth,
     sprite:   EnemySprite,
@@ -92,7 +92,7 @@ FriendlySprite :: struct {
 FriendlyBundle :: struct #packed {
     // removed padding between the fields
     entity:   FriendlyEntity,
-    name:     FriendlyName("PlayerEntity"),
+    name:     FriendlyName("FriendlyEntity"),
     position: EntityPosition,
     health:   EntityHealth,
     sprite:   FriendlySprite,
