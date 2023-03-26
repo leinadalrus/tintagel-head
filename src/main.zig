@@ -4,7 +4,7 @@ const fs = std.fs;
 const mem = std.mem;
 const zbs = std.build;
 const raylib = @cImport({
-    @Include("raylib.h");
+    @cInclude("raylib.h");
 });
 
 const File = &[_][]const u8{};
@@ -33,7 +33,7 @@ fn add(a: i32, b: i32) callconv(.C) i32 {
 }
 
 fn build(builder: *std.build.Builder) void {
-    const exe = b.addExecutable("main", null);
+    const exe = builder.addExecutable("main", null);
     exe.addCSourceFile("main.c", File);
     exe.linkLibC();
     exe.install();

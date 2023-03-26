@@ -1,13 +1,10 @@
-package headers
+package controllers
 
 import raylib "vendor:raylib"
-
-package main
 
 import "core:fmt"
 import "core:math"
 import "core:runtime"
-import raylib "vendor:raylib"
 
 // Constants
 SQUARE_SIZE_CAPACITY :: 32
@@ -150,9 +147,9 @@ update_application_tx :: proc() {
 
 // setup
 setup :: proc() {
-    window_screen_width := 1280
-    window_screen_height := 1024
-    window_application_title := "Inlaid Library: Night 12"
+    window_screen_width : i32 = 1280
+    window_screen_height : i32 = 1024
+    window_application_title : cstring = "Inlaid Library: Night 12"
     
     raylib.InitWindow(window_screen_width, window_screen_height, window_application_title)
     defer raylib.CloseWindow()

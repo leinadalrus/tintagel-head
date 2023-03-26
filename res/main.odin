@@ -1,22 +1,23 @@
-package main
+package controllers
 // My modules
-import "res:headers"
 import "core:fmt"
 import "core:c"
 
-when ODIN_OS == "windows" do foreign import ctl "system:nmemdlcfn.lib"
-when ODIN_OS == "linux"   do foreign import ctl "system:nmemdlcfn" // equivalent to a: `.a` linked static library
+ODIN_OS :: ""
 
-foreign add {
-    add :: proc(a, b: c.int) -> c.int ---
-}
+when ODIN_OS == "windows" do foreign import ctl "system:nmemdlcfn.lib"
+when ODIN_OS == "linux"   do foreign import ctl "system:nmemdlcfn" // equivalent to a: `.a` linked static libraryl
+
+// foreign ctl {
+//     add :: proc(a, b: c.int) -> c.int ---
+// }
 
 @export
-add :: proc "c" (a, b: i32) -> i32 {
+cAdd :: proc "c" (a, b: i32) -> i32 {
     return a + b
 }
 
 main :: proc() {
-    headers.setup()
-    fmt.println(add(1, 1))
+    setup()
+    fmt.println(cAdd(1, 1))
 }
