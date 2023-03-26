@@ -148,27 +148,8 @@ update_application_tx :: proc() {
     }
 }
 
-// Main
-main :: proc() {
-    fmt.println("Hello, world!")
-    raylib.InitWindow(WINDOW_SCREEN_WIDTH, WINDOW_SCREEN_HEIGHT, WINDOW_APPLICATION_TITLE)
-    defer raylib.CloseWindow()
-
-    raylib.SetTargetFPS(10)
-
-    for !raylib.WindowShouldClose() {   // Detect window close button or ESC key
-        initialise_application_tx()
-        update_application_tx()
-        // Raylib Drawing
-        raylib.BeginDrawing()
-        defer raylib.EndDrawing()
-
-        raylib.ClearBackground(raylib.RAYWHITE)
-    }
-}
-
-
-setup :: proc() -> i8 {
+// setup
+setup :: proc() {
     window_screen_width := 1280
     window_screen_height := 1024
     window_application_title := "Inlaid Library: Night 12"
@@ -178,12 +159,13 @@ setup :: proc() -> i8 {
     
     raylib.SetTargetFPS(10)
 
-    for !raylib.WindowShouldClose() {
+    for !raylib.WindowShouldClose() { // Detect window close button or ESC key
+        initialise_application_tx()
+        update_application_tx()
+        // Raylib Drawing
         raylib.BeginDrawing()
         defer raylib.EndDrawing()
 
         raylib.ClearBackground(raylib.BLANK)
     }
-
-    return 0
 }
