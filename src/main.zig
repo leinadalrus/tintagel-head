@@ -6,19 +6,19 @@ const zbs = std.build;
 const raylib = @cImport({
     @cInclude("raylib.h");
 });
+const inlaid = @cImport({
+    @cInclude("main.h");
+});
 
 const File = &[_][]const u8{};
 const String = *const []u8;
 
-fn initialise_odin_tx() !void {
-    const exe = builder.addExecutable("main", null);
-    // exe.addCSourceFile("main.c", File);
-    // exe.linkLibC();
-    exe.install();
-}
-
 fn add(a: i32, b: i32) callconv(.C) i32 {
     return a + b;
+}
+
+fn setup() callconv(.C) void {
+    inlaid.setup();
 }
 
 fn build(builder: *std.build.Builder) void {
@@ -29,6 +29,8 @@ fn build(builder: *std.build.Builder) void {
 }
 
 fn main() !void {
-    initialise_odin_tx()();
+    const builder = *std.build.Builder;
+    build(builder);
+    try setup();
     try add(1, 1);
 }
