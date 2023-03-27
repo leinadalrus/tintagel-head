@@ -47,8 +47,8 @@ EntityHealth :: struct {
 }
 
 EntityPosition :: struct {
-    player_x: f32,
-    player_y: f32,
+    x: f32,
+    y: f32,
 }
 
 PlayerSprite :: struct {
@@ -106,6 +106,24 @@ sin_tau :: proc(angle_in_cycles: f64) -> f64 {  // http://odin-lang.org/docs/ove
     return math.sin(angle_in_cycles)
 }
 
+handle_player_inputs :: proc() {
+    player := PlayerBundle{}
+    mouse := raylib.GetMousePosition()
+
+    if raylib.IsKeyDown(raylib.KeyboardKey.W) {
+        player.position.y += 1.0
+    }
+    if raylib.IsKeyDown(raylib.KeyboardKey.A) {
+        player.position.x -= 1.0
+    }
+    if raylib.IsKeyDown(raylib.KeyboardKey.S) {
+        player.position.y += 1.0
+    }
+    if raylib.IsKeyDown(raylib.KeyboardKey.D) {
+        player.position.x += 1.0
+    }
+}
+
 // Game Loop
 initialise_application_tx :: proc() {
     application_state := GameStates.Pause
@@ -159,8 +177,14 @@ setup :: proc() {
     for !raylib.WindowShouldClose() { // Detect window close button or ESC key
         initialise_application_tx()
         update_application_tx()
+        
         // Raylib Drawing
         raylib.BeginDrawing()
+
+        // Handle Player Inputs
+        handle_player_inputs()
+
+        // End Drawing
         defer raylib.EndDrawing()
 
         raylib.ClearBackground(raylib.BLANK)
