@@ -1,6 +1,13 @@
 #![allow(unused_must_use)]
 use libfuzzer_sys::fuzz_target;
 
+#[cxx::bridge]
+mod ffi {
+    unsafe extern "C++" {
+        
+    }
+}
+
 #[derive(Debug, Clone, arbitrary::Arbitrary)]
 pub struct CommandlineArgument {
     dest: Vec<u8>,
