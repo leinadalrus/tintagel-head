@@ -1,10 +1,14 @@
 #![allow(unused_must_use)]
+#![allow(unused_imports)]
 use libfuzzer_sys::fuzz_target;
+use cxx::UniquePtr;
 
-#[cxx::bridge]
+#[cxx::bridge(namespace = "com::app")]
 mod ffi {
     unsafe extern "C++" {
-        
+        include!("./include/components.h");
+        type PlayerEntity;
+        fn init_shared_player_entity() -> UniquePtr<PlayerEntity>;
     }
 }
 
