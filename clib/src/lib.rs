@@ -1,15 +1,13 @@
+#![allow(dead_code)]
 #![allow(unused_must_use)]
 #![allow(unused_imports)]
 use libfuzzer_sys::fuzz_target;
-use cxx::UniquePtr;
+use libc::{c_int, size_t};
 
-#[cxx::bridge(namespace = "com::app")]
-mod ffi {
-    unsafe extern "C++" {
-        include!("./include/components.h");
-        type PlayerEntity;
-        fn init_shared_player_entity() -> UniquePtr<PlayerEntity>;
-    }
+#[link(name = "wrangler")]
+extern {
+    fn wrangle_components(cloned_structure: *const u8,
+        input_length: size_t) -> c_int;
 }
 
 #[derive(Debug, Clone, arbitrary::Arbitrary)]
@@ -31,6 +29,12 @@ fn exploit_memcpy(dest: Vec<u8>, src: Vec<u8>, n: usize) {
         }
 
         if i > n { break; }
+    }
+}
+
+fn component_wrangling_validation(src: &[u8]) -> bool {
+    unsafe {
+        wrangle_components(src.as_ptr(), src.len() as size_t) == 0
     }
 }
 
