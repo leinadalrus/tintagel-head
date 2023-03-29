@@ -4,7 +4,7 @@
 Experimental project in creating a basic UI in Raylib 4.5, 
   so that the there can be a means to programme the Closed-Captioning of a web application using a `.vtt` files.
   
-* It also uses a Postgres Database Connector with Rust, but also should have a C99 counterpart which further access Postgres' API on Linux.
+* It also uses a Postgres Database Connector with Rust, but also should have a C99 counterpart which further access to Postgres' API on Linux.
 * Odin (Odin-lang) is being used as means to do Data-oriented programming with UI components, 
   although this does seem redundant, Odin already offers a nearly first-class support for Raylib as a vendor.
   * Odin also enables us to write code similar in practice if we had Ryan Fleury's DataDesk, alas DataDesk is unavailable anymore to the public.
