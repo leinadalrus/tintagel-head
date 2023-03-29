@@ -19,12 +19,12 @@ $(build_dir)/$(target_exec): $(static_objs)
 	$(CXX) $(static_objs) -o $@ $(LDFLAGS)
 
 # Build step for C source
-$(BUILD_DIR)/%.c.o: %.c
+$(build_dir)/%.c.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 # Build step for C++ source
-$(BUILD_DIR)/%.cpp.o: %.cpp
+$(build_dir)/%.cpp.o: %.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 

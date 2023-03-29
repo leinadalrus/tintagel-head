@@ -9,16 +9,9 @@ const cURL = @cImport({
 const raylib = @cImport({
     @cInclude("raylib.h");
 });
-const inlaid = @cImport({
-    @cInclude("main.h");
-});
 
 const File = &[_][]const u8{};
 const String = *const []u8;
-
-fn add(a: i32, b: i32) callconv(.C) i32 {
-    return a + b;
-}
 
 fn callback(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
     var buffer = @intToPtr(*std.ArrayList(u8), @ptrToInt(user_data));
@@ -76,5 +69,4 @@ pub fn main() void {
     build(builder);
     try setup();
     try curle();
-    try add(1, 1);
 }
