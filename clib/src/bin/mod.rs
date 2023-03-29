@@ -78,15 +78,13 @@ pub async fn connect_to_datbase(
 async fn migrate_with_pooling(
     database: &Pool<Postgres>,
 ) -> Result<(), EErrors> {
-    match sqlx::migrate!("./db/migrations").run(database).await {
+    return match sqlx::migrate!("./db/migrations").run(database).await {
         Ok(_) => Ok::<(), EErrors>(()),
         Err(err) => {
             println!("db::migrate: migrating: {}", &err);
             return Err(err.into());
         }
     };
-
-    Ok(())
 }
 
 fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
