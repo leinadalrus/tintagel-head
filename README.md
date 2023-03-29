@@ -1,5 +1,5 @@
 # night-12
-## *Production bolstered by a talented crew of zanies - another commedia dell'arte stock characterizer*
+###### *Production bolstered by a talented crew of zanies - another commedia dell'arte stock characterizer*
 
 Experimental project in creating a basic UI in Raylib 4.5, 
   so that the there can be a means to programme the Closed-Captioning of a web application using a `.vtt` files.
