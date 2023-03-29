@@ -14,7 +14,7 @@ extern {
 }
 
 #[derive(Debug, Clone, arbitrary::Arbitrary)]
-pub struct CommandlineArgument {
+pub struct PlatformMessages { // for web-app JavaScript Strings (user messages)
     dest: Vec<u8>,
     src: Vec<u8>,
     n: usize,
@@ -66,7 +66,7 @@ pub async fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::E
 
     println!("cargo:rerun-if-changed=migrations");
 
-    fuzz_target!(|args: CommandlineArgument| {
+    fuzz_target!(|args: PlatformMessages| {
         exploit_memcpy(args.dest, args.src, args.n);
     });
 
