@@ -10,6 +10,9 @@ name = "clibby"
 crate-type = ["cdylib"] # Dynamic libary
 path = "src/lib.rs"
 
+[[bin]]
+name = "mod"
+path = "src/bin/mod.rs"
 
 [dependencies]
 arbitrary = { version = "1", features = ["derive"] }
@@ -17,11 +20,7 @@ axum = "0.6.11"
 libc = "0.2.0"
 dotenv = "0.15.0"
 libfuzzer-sys = "0.4.6"
-reqwest = { version = "0.11.8", features = ["blocking", "cookies", "json"] }
 serde = { version = "1.0.132", features = ["derive"] }
 sqlx = { version = "0.6", features = [ "runtime-tokio-native-tls" , "postgres" ] }
 thiserror = "1.0.40"
 tokio = { version = "1", features = ["full"] }
-
-[build-dependencies]
-cxx-build = "1.0"
