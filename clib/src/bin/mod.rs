@@ -3,7 +3,12 @@ use sqlx::{
     self,
     pool::PoolOptions,
     postgres::{PgConnectOptions, PgPoolOptions},
-    Pool, Postgres, PgPool,
+    Pool, Postgres,
+};
+use tokio::time::Instant;
+use std::{
+    pin::Pin,
+    task::{Context, Poll}, future::Future, thread,
 };
 use thiserror::Error;
 
@@ -64,12 +69,12 @@ impl DatabaseConfig {
     pub fn init() -> DatabaseConfig {
         dotenv::dotenv().ok();
 
-        let database_url =
-            std::env::var("DATABASE_URL").ok().map_or_else(|| "DATABASE_URL", |_| "DATABASE_URL" );
-
-        let database_port = std::env::var("PORT")
+        let database_url = std::env::var("DATABASE_URL")
             .ok()
-            .map_or_else(|| 443, |_| 80);
+            .map_or_else(|| "DATABASE_URL", |_| "DATABASE_URL");
+
+        let database_port =
+            std::env::var("PORT").ok().map_or_else(|| 443, |_| 80);
 
         DatabaseConfig {
             database_url: database_url.to_owned(),
@@ -79,19 +84,43 @@ impl DatabaseConfig {
 }
 
 pub struct DatabaseHandler {
+    database_duration: Instant,
     database_pool: PoolOptions<Postgres>,
     database_config: DatabaseConfig,
 }
 
-impl DatabaseHandler {
-    pub fn run(self) {
+impl Future for DatabaseHandler {
+    type Output = &'static str;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        let database_handler = DatabaseHandler::default();
         let database: &Pool<Postgres> = &PgPoolOptions::connect_lazy_with(
-            self.database_pool,
+            database_handler.database_pool,
             PgConnectOptions::default(),
         );
-        
-        connect_to_database(&self.database_config.database_url);
-        migrate_with_pooling(database);
+
+        if tokio::time::Instant::now() >= self.database_duration {
+            connect_to_database(&self.database_config.database_url);
+            migrate_with_pooling(database);
+            Poll::Ready("Finished")
+        } else {
+            // Get a handle to the waker for the current task
+            let waker = cx.waker().clone();
+            let when = self.database_duration;
+
+            // Spawn a timer thread.
+            std::thread::spawn(move || {
+                let now = Instant::now();
+
+                if now < when {
+                    thread::sleep(when - now);
+                }
+
+                waker.wake();
+            });
+
+            Poll::Pending
+        }
     }
 }
 
@@ -100,6 +129,7 @@ impl Default for DatabaseHandler {
         let database_pool = PgPoolOptions::default();
         let database_config = DatabaseConfig::init();
         return DatabaseHandler {
+            database_duration: tokio::time::Instant::now(),
             database_pool,
             database_config,
         };
@@ -137,8 +167,7 @@ async fn migrate_with_pooling(
 }
 
 fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
-    let database_handler = DatabaseHandler::default();
-    DatabaseHandler::run(database_handler);
+    /* let database_handler = */ DatabaseHandler::default();
     println!("cargo:rerun-if-changed=migrations");
     Ok(())
 }
