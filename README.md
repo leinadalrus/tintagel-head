@@ -6,7 +6,7 @@ Experimental project in creating a basic UI in Raylib 4.5,
   
 * It also uses a Postgres Database Connector with Rust, but also should have a C99 counterpart which further access Postgres' API on Linux.
 * Odin (Odin-lang) is being used as means to do Data-oriented programming with UI components, 
-  although this does seem redundant, Odin already offers a near first-class support for Raylib as a vendor.
+  although this does seem redundant, Odin already offers a nearly first-class support for Raylib as a vendor.
   * Odin also enables us to write code similar in practice if we had Ryan Fleury's DataDesk, alas DataDesk is unavailable anymore to the public.
 * Zig (Zig-lang) is like the little brother to Rust. It just helps us write fast-failing functions/features for C interoptability.
   * Zig enables us to interop with C without use of Dependencies like in Rust, 
