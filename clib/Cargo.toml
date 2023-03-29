@@ -19,6 +19,7 @@ arbitrary = { version = "1", features = ["derive"] }
 axum = "0.6.11"
 libc = "0.2.0"
 dotenv = "0.15.0"
+futures = { version = "0.3", default-features = false }
 libfuzzer-sys = "0.4.6"
 serde = { version = "1.0.132", features = ["derive"] }
 sqlx = { version = "0.6", features = [ "runtime-tokio-native-tls" , "postgres" ] }

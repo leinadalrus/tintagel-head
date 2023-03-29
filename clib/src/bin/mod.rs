@@ -5,12 +5,8 @@ use sqlx::{
     postgres::{PgConnectOptions, PgPoolOptions},
     Pool, Postgres,
 };
-use tokio::time::Instant;
-use std::{
-    pin::Pin,
-    task::{Context, Poll}, future::Future, thread,
-};
 use thiserror::Error;
+use tokio::time::Instant;
 
 #[derive(Error, Debug, Clone)]
 pub enum EErrors {
@@ -89,41 +85,6 @@ pub struct DatabaseHandler {
     database_config: DatabaseConfig,
 }
 
-impl Future for DatabaseHandler {
-    type Output = &'static str;
-
-    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        let database_handler = DatabaseHandler::default();
-        let database: &Pool<Postgres> = &PgPoolOptions::connect_lazy_with(
-            database_handler.database_pool,
-            PgConnectOptions::default(),
-        );
-
-        if tokio::time::Instant::now() >= self.database_duration {
-            connect_to_database(&self.database_config.database_url);
-            migrate_with_pooling(database);
-            Poll::Ready("Finished")
-        } else {
-            // Get a handle to the waker for the current task
-            let waker = cx.waker().clone();
-            let when = self.database_duration;
-
-            // Spawn a timer thread.
-            std::thread::spawn(move || {
-                let now = Instant::now();
-
-                if now < when {
-                    thread::sleep(when - now);
-                }
-
-                waker.wake();
-            });
-
-            Poll::Pending
-        }
-    }
-}
-
 impl Default for DatabaseHandler {
     fn default() -> Self {
         let database_pool = PgPoolOptions::default();
@@ -166,8 +127,18 @@ async fn migrate_with_pooling(
     };
 }
 
-fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
-    /* let database_handler = */ DatabaseHandler::default();
+#[tokio::main]
+pub async fn main(
+) -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=migrations");
+    let database_handler = DatabaseHandler::default();
+    let database_pool: &Pool<Postgres> = &PgPoolOptions::connect_lazy_with(
+        database_handler.database_pool,
+        PgConnectOptions::default(),
+    );
+
+    connect_to_database(&database_handler.database_config.database_url).await;
+    migrate_with_pooling(database_pool).await;
+
     Ok(())
 }
