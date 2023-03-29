@@ -3,6 +3,7 @@
 zig-cache
 zig-out
 build.zig
+ols.json
 *.log*
 *.exe*
 .cache
