@@ -13,6 +13,48 @@ const raylib = @cImport({
 const File = &[_][]const u8{};
 const String = *const []u8;
 
+const Position = struct {
+    x: f64,
+    y: f64,
+};
+
+const Health = struct {
+    health_points: f64,
+};
+
+const PlayerEntity = struct {};
+const PlayerName = struct {};
+const PlayerSprite = struct {};
+const PlayerBundle = struct {
+    entity: PlayerEntity,
+    name: PlayerName,
+    position: Position,
+    health: Health,
+    sprite: PlayerSprite,
+};
+
+const EnemyEntity = struct {};
+const EnemyName = struct {};
+const EnemySprite = struct {};
+const EnemyBundle = struct {
+    entity: EnemyEntity,
+    name: EnemyName,
+    position: Position,
+    health: Health,
+    sprite: EnemySprite,
+};
+
+const FriendlyEntity = struct {};
+const FriendlyName = struct {};
+const FriendlySprite = struct {};
+const FriendlyBundle = struct {
+    entity: FriendlyEntity,
+    name: FriendlyName,
+    position: Position,
+    health: Health,
+    sprite: FriendlySprite,
+};
+
 fn callback(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
     var buffer = @intToPtr(*std.ArrayList(u8), @ptrToInt(user_data));
     var typed_data = @intToPtr([*]u8, @ptrToInt(data));
