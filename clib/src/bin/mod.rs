@@ -84,11 +84,12 @@ pub struct DatabaseHandler {
 }
 
 impl DatabaseHandler {
-    pub async fn run(self) {
+    pub fn run(self) {
         let database: &Pool<Postgres> = &PgPoolOptions::connect_lazy_with(
             self.database_pool,
             PgConnectOptions::default(),
         );
+        
         connect_to_database(&self.database_config.database_url);
         migrate_with_pooling(database);
     }
