@@ -184,7 +184,7 @@ draw_application_tx :: proc() {
 }
 
 draw_application_rx :: proc() {
-    player_sprite := raylib.LoadTexture("assets/resources/sprites/player_front.png")
+    player_sprite := raylib.LoadTexture("assets/sprites/player_front.png")
     player_position := .0
     player_width := f32(player_sprite.width)
     player_height := f32(player_sprite.height) // The cast operator can also be used to do the same thing
