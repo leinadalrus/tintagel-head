@@ -231,7 +231,6 @@ setup :: proc() {
 
         // End Drawing
         defer raylib.EndDrawing()
-
         raylib.ClearBackground(raylib.BLANK)
     }
 }
