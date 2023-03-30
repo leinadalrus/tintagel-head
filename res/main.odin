@@ -200,6 +200,11 @@ draw_application_rx :: proc() {
     }
 }
 
+unload_sprite_system :: proc() {
+    player_sprite := raylib.LoadTexture("assets/sprites/player_front.png")
+    raylib.UnloadTexture(player_sprite)
+}
+
 // setup
 setup :: proc() {
     window_screen_width : i32 = 1280
@@ -220,6 +225,9 @@ setup :: proc() {
 
         // Handle Player Inputs
         handle_player_inputs()
+        draw_application_tx()
+        draw_application_rx()
+        defer unload_sprite_system()
 
         // End Drawing
         defer raylib.EndDrawing()
