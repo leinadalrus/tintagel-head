@@ -12,7 +12,7 @@ Experimental project in creating a basic UI in Raylib 4.5,
   * Zig enables us to interop with C without use of a lot of dependencies like in Rust, 
     and has a really good testing syntax, and try-catch-final syntactic sugar.
     
- And C99 is also employed because I love C, 
-  but I tend to shoot myself in the foot with it, which is as to why am experimenting with new and old technologies.
+ And C++14 is also employed because I love C, alas C++ enables us to use OOP practices better to practice, 
+  but I tend to shoot myself in the foot with it anyways, which is as to why am experimenting with new and old technologies.
     
 Might in turn make this into a 'Type-fighter/ARPG' kinda project to make it a bit more coherent when invisioning the system.
