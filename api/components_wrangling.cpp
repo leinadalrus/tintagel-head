@@ -1,6 +1,6 @@
 #define SAMPLE_RATE (44100)
 #include "components_wrangler_private.h"
-#include "../lib/pa/portaudio/include/portaudio.h"
+#include "../lib/portaudio/include/portaudio.h"
 #include "../lib/libsndfile/include/sndfile.h"
 
 template <class T, class E> Result<T, E>::Result(T type, E expected) {}
