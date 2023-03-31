@@ -1,22 +1,26 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
-typedef struct ResultVirtualTable {
-    ResultVirtualTable(const char* cloned_self); // char is equal to u8. char* is like void*
-} ResultVirtualTable, *ResultVirtualTablePtr;
-
-enum Errors {
-    None = 0,
-    Found = 1,
+enum class Errors
+{
+  None = 0,
+  Found = 1,
 };
 
-typedef struct DatabaseConfig {
-    // private
-    const char *database_url;
-    unsigned int database_port;
-} DatabaseConfig;
+template <typename T, typename E>
+class Result
+{
+  Result(T type, E expected);
+};
 
-// public
-int init_database_config(DatabaseConfig database_config_self);
+class DatabaseConfig
+{
+public:
+  int init_database_config(DatabaseConfig database_config_self);
+
+private:
+  const char *database_url;
+  unsigned int database_port;
+};
 
 #endif // COMPONENTS_H

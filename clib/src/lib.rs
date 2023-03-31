@@ -4,17 +4,21 @@
 
 mod bin;
 
+use cxx::bridge;
 use libfuzzer_sys::fuzz_target;
-use libc::{c_int, size_t};
 
-#[link(name = "wrangler")]
-extern {
-    fn wrangle_components(cloned_structure: *const u8,
-        input_length: size_t) -> c_int;
+#[cxx::bridge]
+mod ffi {
+    unsafe extern "C++" {
+        unsafe fn wrangle_components(
+            cloned_structure: *const u8, input_length: isize,
+        ) -> i8;
+    }
 }
 
 #[derive(Debug, Clone, arbitrary::Arbitrary)]
-pub struct CommandlineArgument {
+pub struct PlatformMessages {
+    // for web-app JavaScript Strings (user messages)
     dest: Vec<u8>,
     src: Vec<u8>,
     n: usize,
@@ -31,14 +35,14 @@ fn exploit_memcpy(dest: Vec<u8>, src: Vec<u8>, n: usize) {
             i += 1;
         }
 
-        if i > n { break; }
+        if i > n {
+            break;
+        }
     }
 }
 
 fn component_wrangling_validation(src: &[u8]) -> bool {
-    unsafe {
-        wrangle_components(src.as_ptr(), src.len() as size_t) == 0
-    }
+    unsafe { ffi::wrangle_components(src.as_ptr(), src.len() as isize) == 0 }
 }
 
 async fn routed_index_page() -> &'static str {
@@ -46,8 +50,10 @@ async fn routed_index_page() -> &'static str {
 }
 
 #[tokio::main]
-pub async fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
-    let app_router = axum::Router::new().route("/", axum::routing::get(routed_index_page));
+pub async fn main(
+) -> std::result::Result<(), std::boxed::Box<dyn std::error::Error>> {
+    let app_router =
+        axum::Router::new().route("/", axum::routing::get(routed_index_page));
 
     let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
 
@@ -56,7 +62,8 @@ pub async fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::E
         .await
         .unwrap();
 
-    let linkage = std::env::var("CARGO_CFG_TARGET_FEATURE").unwrap_or(String::new());
+    let linkage =
+        std::env::var("CARGO_CFG_TARGET_FEATURE").unwrap_or(String::new());
 
     if linkage.contains("crt-static") {
         println!("the C runtime will be statically linked");
@@ -66,7 +73,7 @@ pub async fn main() -> std::result::Result<(), std::boxed::Box<dyn std::error::E
 
     println!("cargo:rerun-if-changed=migrations");
 
-    fuzz_target!(|args: CommandlineArgument| {
+    fuzz_target!(|args: PlatformMessages| {
         exploit_memcpy(args.dest, args.src, args.n);
     });
 

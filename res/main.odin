@@ -22,6 +22,9 @@ LateralMovementCounter := .0
 LongitudinalMovementCounter := .0
 ClientTickrate := .0
 
+MaxFrameSpeed :: 10
+MinFrameSpeed :: 1
+
 // Enums
 GridmapEntities :: enum u8 {
     Empty,
@@ -49,6 +52,7 @@ EntityHealth :: struct {
 EntityPosition :: struct {
     x: f32,
     y: f32,
+    delta: f32, // delta for encompassing both x and y
 }
 
 PlayerSprite :: struct {
@@ -163,6 +167,44 @@ update_application_tx :: proc() {
     }
 }
 
+draw_application_tx :: proc() {
+    current_frame := 0
+    frame_counter := 0
+    framerate := 10
+    
+    frame_counter += 1 // note: to-do; force frame increase somehow?
+
+    if frame_counter >= 60/framerate {
+        frame_counter = 0
+        current_frame += 1
+        if current_frame > 5 {
+            current_frame = 0
+        }
+    }
+}
+
+draw_application_rx :: proc() {
+    player_sprite := raylib.LoadTexture("assets/sprites/player_front.png")
+    player_position := .0
+    player_width := f32(player_sprite.width)
+    player_height := f32(player_sprite.height) // The cast operator can also be used to do the same thing
+    player_hitbox := raylib.Rectangle{0.0, 0.0, player_width, player_height}
+    player := PlayerBundle{}
+
+    raylib.DrawTexture(player_sprite, 16, 16*2, raylib.BLANK)
+
+    for i := 0; i < MaxFrameSpeed; i += 1 {
+        if i < 10 { /* framerate := 10 */
+            raylib.DrawTextureRec(player_sprite, player_hitbox, player.position.delta, raylib.BLANK)
+        }
+    }
+}
+
+unload_sprite_system :: proc() {
+    player_sprite := raylib.LoadTexture("assets/sprites/player_front.png")
+    raylib.UnloadTexture(player_sprite)
+}
+
 // setup
 setup :: proc() {
     window_screen_width : i32 = 1280
@@ -183,10 +225,12 @@ setup :: proc() {
 
         // Handle Player Inputs
         handle_player_inputs()
+        draw_application_tx()
+        draw_application_rx()
+        defer unload_sprite_system()
 
         // End Drawing
         defer raylib.EndDrawing()
-
         raylib.ClearBackground(raylib.BLANK)
     }
 }

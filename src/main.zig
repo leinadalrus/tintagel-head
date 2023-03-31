@@ -6,19 +6,9 @@ const zbs = std.build;
 const cURL = @cImport({
     @cInclude("curl/curl.h");
 });
-const raylib = @cImport({
-    @cInclude("raylib.h");
-});
-const inlaid = @cImport({
-    @cInclude("main.h");
-});
 
 const File = &[_][]const u8{};
 const String = *const []u8;
-
-fn add(a: i32, b: i32) callconv(.C) i32 {
-    return a + b;
-}
 
 fn callback(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
     var buffer = @intToPtr(*std.ArrayList(u8), @ptrToInt(user_data));
@@ -60,10 +50,6 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     }
 } // compile with `zig build-exe ./src/main.zig --library curl --library c $(pkg-config --cflags libcurl)`
 
-fn setup() callconv(.C) void {
-    inlaid.setup();
-}
-
 fn build(builder: *zbs.Builder) void {
     const exe = builder.addExecutable("main", null);
     exe.addCSourceFile("main.c", File);
@@ -74,7 +60,5 @@ fn build(builder: *zbs.Builder) void {
 pub fn main() void {
     const builder = *zbs.Builder;
     build(builder);
-    try setup();
     try curle();
-    try add(1, 1);
 }
