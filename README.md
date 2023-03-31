@@ -3,8 +3,13 @@
 
 Experimental project in creating a basic UI in Raylib 4.5, 
   so that the there can be a means to programme the Closed-Captioning of a web application using a `.vtt` files.
+
+##### The general idea as-of-now...
+*Currently using C++14 to create a far-more robust application audio backend.*
+
+###### Zig
+*Zig is being used to manage cURL, even though Rust can pull this technicality off, Rust is currently FFI-ing with David Tolnay's CXX project for interoptability with C++14.*
   
-* It also uses a Postgres Database Connector with Rust, but also should have a C99 counterpart which further access to Postgres' API on Linux.
 * Odin (Odin-lang) is being used as means to do Data-oriented programming with UI components, 
   although this does seem redundant, Odin already offers a nearly first-class support for Raylib as a vendor.
   * Odin also enables us to write code similar in practice if we had Ryan Fleury's DataDesk, alas DataDesk is unavailable anymore to the public.
