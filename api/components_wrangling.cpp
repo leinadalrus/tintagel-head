@@ -2,6 +2,7 @@
 #include "components_wrangler_private.h"
 #include "../lib/portaudio/include/portaudio.h"
 #include "../lib/libsndfile/include/sndfile.h"
+#include "../lib/soloud/include/soloud.h"
 
 template <class T, class E> Result<T, E>::Result(T type, E expected) {}
 
