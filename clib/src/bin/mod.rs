@@ -81,7 +81,7 @@ impl DatabaseConfig {
 
 pub struct DatabaseHandler {
     database_duration: Instant,
-    database_pool: PoolOptions<Postgres>,
+    database_pool: PoolOptions<Postgres>, // TODO: how to force PoolOptions<Postgres> to work with `futures::lazy()` ?
     database_config: DatabaseConfig,
 }
 
