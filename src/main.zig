@@ -2,7 +2,6 @@ const std = @import("std");
 const assert = std.debug.assert;
 const fs = std.fs;
 const mem = std.mem;
-const zbs = std.build;
 const cURL = @cImport({
     @cInclude("curl/curl.h");
 });
@@ -50,15 +49,6 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     }
 } // compile with `zig build-exe ./src/main.zig --library curl --library c $(pkg-config --cflags libcurl)`
 
-fn build(builder: *zbs.Builder) void {
-    const exe = builder.addExecutable("main", null);
-    exe.addCSourceFile("main.c", File);
-    exe.linkLibC();
-    exe.install();
-}
-
 pub fn main() void {
-    const builder = *zbs.Builder;
-    build(builder);
     try curle();
 }
