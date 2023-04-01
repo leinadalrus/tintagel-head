@@ -5,9 +5,22 @@ const mem = std.mem;
 const cURL = @cImport({
     @cInclude("curl/curl.h");
 });
+const pa = @cImport({
+    @cInclude("../lib/portaudio/include/portaudio.h");
+});
+const snd = @cImport({
+    @cInclude("../lib/libsndfile/include/sndfile.h");
+});
 
 const File = &[_][]const u8{};
 const String = *const []u8;
+
+const CPaStreamCallbackTimeInfo = struct {
+    inputBufferAdcTime: f32,  // The time when the first sample of the input buffer was captured at the ADC input
+    currentTime: f32,         // The time when the stream callback was invoked
+    outputBufferDacTime: f32, // The time when the first sample of the output buffer will output the DAC 
+};
+const CCallbackTimeInfo = CPaStreamCallbackTimeInfo; // the struct name is too long
 
 fn callback(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
     var buffer = @intToPtr(*std.ArrayList(u8), @ptrToInt(user_data));
@@ -47,8 +60,18 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     if (cURL.curl_easy_perform(handle) != cURL.CURLE_OK) {
         return error.FailedToPerformRequest;
     }
-} // compile with `zig build-exe ./src/main.zig --library curl --library c $(pkg-config --cflags libcurl)`
+}
+
+fn pasoundfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque,
+                               frames_per_buffer: u32,
+                               time_info: CCallbackTimeInfo,
+                               status_flags: c_uint,
+                               user_data: anyopaque) c_uint {
+    return 0;
+                               }
+
+fn pasoundfile_backend_setup() !void {}
 
 pub fn main() void {
     try curle();
-}
+} // compile with `zig build-exe ./src/main.zig --library curl --library c $(pkg-config --cflags libcurl)`

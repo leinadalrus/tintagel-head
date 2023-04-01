@@ -15,7 +15,9 @@ template <typename T, typename E> class Result {
   Result(T type, E expected);
 };
 
-class UserName(string);
+class UserName {
+  const char *user_name = "";
+};
 class UserEntity;
 class UserBundle {
   UserName *name;

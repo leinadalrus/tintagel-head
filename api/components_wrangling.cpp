@@ -8,7 +8,7 @@ Result<T, E>::Result(T type, E expected) {}
 
 void UserHandler::handle_user_command(UserCommand user_command) {}
 
-static int audio_test_callback(const void *input_buffer, void *output_buffer,
+const int audio_test_callback(const void *input_buffer, void *output_buffer,
                                unsigned long frames_per_buffer,
                                const PaStreamCallbackTimeInfo *time_info,
                                PaStreamCallbackFlags status_flags,
@@ -26,7 +26,7 @@ static int audio_test_callback(const void *input_buffer, void *output_buffer,
   return 0;
 }
 
-constexpr bool init_pa_system()
+const bool init_pa_system()
 {
   auto pa_err = Pa_Initialize();
   if (pa_err == paNoError) {
@@ -39,7 +39,7 @@ constexpr bool init_pa_system()
   return pa_err;
 }
 
-constexpr bool open_audio_as_defaulted(PaStream *audio_stream, char *user_data)
+const bool open_audio_as_defaulted(PaStream *audio_stream, char *user_data)
 {
   AudioTestData *audio_data = (AudioTestData *)user_data;
   PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_test_callback, &audio_data);
