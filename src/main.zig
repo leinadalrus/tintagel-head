@@ -19,10 +19,10 @@ const CPaStreamCallbackTimeInfo = struct {
     inputBufferAdcTime: f32, // The time when the first sample of the input buffer was captured at the ADC input
     currentTime: f32, // The time when the stream callback was invoked
     outputBufferDacTime: f32, // The time when the first sample of the output buffer will output the DAC
-};
+}; // skeumorphism of the Stream Callback Time Info data-structure from Port Audio
 const CCallbackTimeInfo = CPaStreamCallbackTimeInfo; // the struct name is too long
 
-fn callback(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
+fn curl_callback_c(data: *anyopaque, size: c_uint, nmemb: c_uint, user_data: *anyopaque) callconv(.C) c_uint {
     var buffer = @intToPtr(*std.ArrayList(u8), @ptrToInt(user_data));
     var typed_data = @intToPtr([*]u8, @ptrToInt(data));
     buffer.appendSlice(typed_data[0 .. nmemb * size]) catch return 0;
@@ -48,7 +48,7 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     errdefer cURL.curl_easy_cleanup(handle);
 
     // set write function callbacks
-    if (cURL.curl_easy_setopt(handle, cURL.CURLOPT_WRITEFUNCTION, callback) != cURL.CURLE_OK) {
+    if (cURL.curl_easy_setopt(handle, cURL.CURLOPT_WRITEFUNCTION, curl_callback_c) != cURL.CURLE_OK) {
         return error.CouldNotSetWriteCallback;
     }
     if (cURL.curl_easy_setopt(handle, cURL.CURLOPT_WRITEDATA, &response_buffer_message) != cURL.CURLE_OK) {
@@ -62,18 +62,22 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     }
 }
 
-fn pasoundfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque, frames_per_buffer: u32, time_info: CCallbackTimeInfo, status_flags: c_uint, user_data: anyopaque) callconv(.C) c_uint {
-    _ = user_data;
-    _ = status_flags;
-    _ = time_info;
-    _ = frames_per_buffer;
-    _ = output_buffer;
-    _ = input_buffer;
+fn pasndfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque, frames_per_buffer: u32, time_info: CCallbackTimeInfo, status_flags: c_uint, audio_data: anyopaque) callconv(.C) c_uint {
+    input_buffer = @intToPtr(std.ArrayList(f32), input_buffer);
+    output_buffer = @intToPtr(std.ArrayList(f32), output_buffer);
+    audio_data = @intToPtr(std.ArrayList(f32), audio_data);
+    status_flags = 0;
+    time_info = std.heap.ArenaAllocator.init(std.heap.c_allocator);
+    frames_per_buffer = @intToPtr([*]u8, @ptrToInt(audio_data));
     return 0;
+} // NOTE: give the user inputted parameters heap memory allocated values to make them tangible.
+
+fn pasndfile_backend_setup() !void {
+    if (pasndfile_callback_c == 0) {
+        return error.CouldNotSetWriteCallback;
+    }
 }
 
-fn pasoundfile_backend_setup() !void {}
-
-pub fn main() void {
+fn main() !void {
     try curle();
 } // compile with `zig build-exe ./src/main.zig --library curl --library c $(pkg-config --cflags libcurl)`
