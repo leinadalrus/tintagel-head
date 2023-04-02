@@ -1,4 +1,4 @@
-package models 
+package models
 import raylib "vendor:raylib"
 
 import "core:fmt"
@@ -6,12 +6,15 @@ import "core:math"
 import "core:runtime"
 
 // Constants
+LATERAL_SPEED :: 10
+LONGITUDINAL_SPEED :: 10
+
 SQUARE_SIZE_CAPACITY :: 32
 SQUARE_SIZE_AXIS_X :: 16
 SQUARE_SIZE_AXIS_Y :: 16
 
-LATERAL_SPEED :: 10
-LONGITUDINAL_SPEED :: 10
+WINDOW_SCREEN_WIDTH :: 1024
+WINDOW_SCREEN_HEIGHT :: 1280
 
 // Global
 ItemizedGridmap: [SQUARE_SIZE_AXIS_X][SQUARE_SIZE_AXIS_Y]GridmapEntities
@@ -26,17 +29,17 @@ MinFrameSpeed :: 1
 
 // Enums
 GridmapEntities :: enum u8 {
-    Empty,
-    Blocking,
+	Empty,
+	Blocking,
 }
 
 GameStates :: enum i8 {
-    GameOver,
-    Pause,
+	GameOver,
+	Pause,
 }
 
 CollisionDetection :: enum i8 {
-    Detected,
+	Detected,
 }
 
 PlayerEntity :: struct {}
@@ -45,26 +48,26 @@ PlayerEntity :: struct {}
 PlayerName :: struct(name: string) {}
 
 EntityHealth :: struct {
-    player_health_points: u8,
+	player_health_points: u8,
 }
 
 EntityPosition :: struct {
-    x: f32,
-    y: f32,
-    delta: f32, // delta for encompassing both x and y
+	x:     f32,
+	y:     f32,
+	delta: f32, // delta for encompassing both x and y
 }
 
 PlayerSprite :: struct {
-    player_sprite_id: string,
+	player_sprite_id: string,
 }
 
 PlayerBundle :: struct #packed {
-    // removed padding between the fields
-    entity:   PlayerEntity,
-    name:     PlayerName("PlayerEntity"),
-    position: EntityPosition,
-    health:   EntityHealth,
-    sprite:   PlayerSprite,
+	// removed padding between the fields
+	entity:   PlayerEntity,
+	name:     PlayerName("PlayerEntity"),
+	position: EntityPosition,
+	health:   EntityHealth,
+	sprite:   PlayerSprite,
 }
 
 EnemyEntity :: struct {}
@@ -72,16 +75,16 @@ EnemyEntity :: struct {}
 EnemyName :: struct(name: string) {}
 
 EnemySprite :: struct {
-    player_sprite_id: string,
+	player_sprite_id: string,
 }
 
 EnemyBundle :: struct #packed {
-    // removed padding between the fields
-    entity:   EnemyEntity,
-    name:     EnemyName("EnemyEntity"),
-    position: EntityPosition,
-    health:   EntityHealth,
-    sprite:   EnemySprite,
+	// removed padding between the fields
+	entity:   EnemyEntity,
+	name:     EnemyName("EnemyEntity"),
+	position: EntityPosition,
+	health:   EntityHealth,
+	sprite:   EnemySprite,
 }
 
 FriendlyEntity :: struct {}
@@ -89,14 +92,14 @@ FriendlyEntity :: struct {}
 FriendlyName :: struct(name: string) {}
 
 FriendlySprite :: struct {
-    player_sprite_id: string,
+	player_sprite_id: string,
 }
 
 FriendlyBundle :: struct #packed {
-    // removed padding between the fields
-    entity:   FriendlyEntity,
-    name:     FriendlyName("FriendlyEntity"),
-    position: EntityPosition,
-    health:   EntityHealth,
-    sprite:   FriendlySprite,
+	// removed padding between the fields
+	entity:   FriendlyEntity,
+	name:     FriendlyName("FriendlyEntity"),
+	position: EntityPosition,
+	health:   EntityHealth,
+	sprite:   FriendlySprite,
 }

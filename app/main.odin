@@ -1,6 +1,6 @@
-package main 
+package main
 import handlers "handlers"
 
 main :: proc() {
-    handlers.setup()
+	handlers.setup()
 }
