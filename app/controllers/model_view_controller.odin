@@ -5,30 +5,28 @@ import models "../models"
 
 OrthographForeground :: struct {}
 OrthographBackground :: struct {}
+OrthographyBundler :: struct {
+    foreground: OrthographForeground,
+    background: OrthographBackground,
+}
 
 WindowAspect :: struct {
 	window_aspect_width:  i32,
 	window_aspect_height: i32,
 }
 
-control_window_aspect_dimensions :: proc() -> WindowAspect {
+set_resolution_by_monitor :: proc() -> WindowAspect {
 	window_aspect := WindowAspect{}
 
-	window_aspect.window_aspect_width = models.WINDOW_SCREEN_WIDTH
-	window_aspect.window_aspect_height = models.WINDOW_SCREEN_HEIGHT
+	window_aspect.window_aspect_width = raylib.GetScreenWidth()
+	window_aspect.window_aspect_height = raylib.GetScreenHeight()
 
 	return window_aspect
 }
 
-set_resolution_by_monitor :: proc() -> WindowAspect {
-    window_aspect := WindowAspect{}
+discriminate_orthographic_layers :: proc() -> OrthographyBundler {
+	foreground := OrthographForeground{}
+	background := OrthographBackground{}
 
-    window_aspect.window_aspect_width = raylib.GetScreenWidth()
-	window_aspect.window_aspect_height = raylib.GetScreenHeight()
-
-    return window_aspect
-}
-
-repel_blocked_mapped_items :: proc() {
-
+	return OrthographyBundler{foreground, background}
 }
