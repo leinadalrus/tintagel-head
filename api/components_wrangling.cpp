@@ -8,7 +8,7 @@ Result<T, E>::Result(T type, E expected) {}
 
 void UserHandler::handle_user_command(UserCommand user_command) {}
 
-const int audio_test_callback(const void *input_buffer, void *output_buffer,
+constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
                                unsigned long frames_per_buffer,
                                const PaStreamCallbackTimeInfo *time_info,
                                PaStreamCallbackFlags status_flags,

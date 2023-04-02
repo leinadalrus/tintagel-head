@@ -16,9 +16,9 @@ const File = &[_][]const u8{};
 const String = *const []u8;
 
 const CPaStreamCallbackTimeInfo = struct {
-    inputBufferAdcTime: f32,  // The time when the first sample of the input buffer was captured at the ADC input
-    currentTime: f32,         // The time when the stream callback was invoked
-    outputBufferDacTime: f32, // The time when the first sample of the output buffer will output the DAC 
+    inputBufferAdcTime: f32, // The time when the first sample of the input buffer was captured at the ADC input
+    currentTime: f32, // The time when the stream callback was invoked
+    outputBufferDacTime: f32, // The time when the first sample of the output buffer will output the DAC
 };
 const CCallbackTimeInfo = CPaStreamCallbackTimeInfo; // the struct name is too long
 
@@ -62,13 +62,15 @@ fn curle(input_uri_path: *const []u8) !void { // try keyword with `!void` return
     }
 }
 
-fn pasoundfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque,
-                               frames_per_buffer: u32,
-                               time_info: CCallbackTimeInfo,
-                               status_flags: c_uint,
-                               user_data: anyopaque) c_uint {
+fn pasoundfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque, frames_per_buffer: u32, time_info: CCallbackTimeInfo, status_flags: c_uint, user_data: anyopaque) callconv(.C) c_uint {
+    _ = user_data;
+    _ = status_flags;
+    _ = time_info;
+    _ = frames_per_buffer;
+    _ = output_buffer;
+    _ = input_buffer;
     return 0;
-                               }
+}
 
 fn pasoundfile_backend_setup() !void {}
 
