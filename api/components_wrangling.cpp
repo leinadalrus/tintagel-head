@@ -47,7 +47,6 @@ const bool open_default_audio(PaStream *audio_stream, char *user_data)
   if (pa_err == paNoError)
   {
     pa_err = Pa_StopStream(audio_data);
-    ;
   }
 
   return 0;
