@@ -6,8 +6,8 @@ import models "../models"
 OrthographForeground :: struct {}
 OrthographBackground :: struct {}
 OrthographyBundler :: struct {
-    foreground: OrthographForeground,
-    background: OrthographBackground,
+	foreground: OrthographForeground,
+	background: OrthographBackground,
 }
 
 WindowAspect :: struct {
@@ -30,3 +30,5 @@ discriminate_orthographic_layers :: proc() -> OrthographyBundler {
 
 	return OrthographyBundler{foreground, background}
 }
+
+repel_blocked_mapped_items :: proc() {}
