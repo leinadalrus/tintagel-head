@@ -38,6 +38,23 @@ class AudioBundle
   SoundEntity *sound_entity;
 };
 
+class LevelForeground
+{
+};
+
+class LevelBackground
+{
+};
+
+class LevelDatum
+{
+  LevelForeground foreground;
+  LevelBackground background;
+
+public:
+  LevelDatum(LevelForeground foreground, LevelBackground background);
+};
+
 void handle_signalled_exit(int index)
 {
   switch (index)
@@ -45,7 +62,7 @@ void handle_signalled_exit(int index)
   case SIGTERM:
     break;
   }
-}
+} // Best way to exit a program gracefully without using pkill (no date). Available at: https://stackoverflow.com/a/8906773.
 
 constexpr bool level_document_callback(FILE document, char *user, char *data, uint8_t size, uint8_t nmemb)
 {
@@ -68,7 +85,16 @@ constexpr bool transpose_level_document(FILE document, uint8_t data_size, char *
   }
 
   return callbacker;
-} // Best way to exit a program gracefully without using pkill (no date). Available at: https://stackoverflow.com/a/8906773.
+}
+
+LevelDatum *discriminate_orthographic_layers()
+{
+  LevelForeground foreground = LevelForeground{};
+  LevelBackground background = LevelBackground{};
+
+  return &LevelDatum::LevelDatum(foreground, background);
+}
+
 constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
                                   unsigned long frames_per_buffer,
                                   const PaStreamCallbackTimeInfo *time_info,
