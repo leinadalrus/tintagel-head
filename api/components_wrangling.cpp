@@ -87,13 +87,13 @@ constexpr bool transpose_level_document(FILE document, uint8_t data_size, char *
   return callbacker;
 }
 
-LevelDatum *discriminate_orthographic_layers()
+constexpr LevelDatum *discriminate_orthographic_layers()
 {
   LevelForeground foreground = LevelForeground{};
   LevelBackground background = LevelBackground{};
 
   return &LevelDatum::LevelDatum(foreground, background);
-}
+} // NOTE: constexpr cannot have an non-literal return type.
 
 constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
                                   unsigned long frames_per_buffer,
