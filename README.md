@@ -1,4 +1,4 @@
-# night-12
+# Tintagel Head
 ###### *Production bolstered by a talented crew of zanies - another commedia dell'arte stock characterizer*
 
 Experimental project in creating a basic UI in Raylib 4.5 for the sake of Digital Signal Processing and Audio Streaming/Handling.
