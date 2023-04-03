@@ -5,38 +5,46 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-enum class Errors {
+enum class Errors
+{
   None = 0,
   Found = 1,
 };
 
-template <typename T, typename E> class Result {
+template <typename T, typename E>
+class Result
+{
   Result(T type, E expected);
 };
 
-class UserName {
+class UserName
+{
   const char *user_name = "";
 };
 class UserEntity;
-class UserBundle {
+class UserBundle
+{
   UserName *name;
   UserEntity *entity;
 };
 
-class UserCommand {
+class UserCommand
+{
 public:
   void execute_user_command();
 };
 
-class UserHandler : public UserCommand {
+class UserHandler : public UserCommand
+{
   UserCommand *user_command;
 
 public:
-  void execute_user_command() {
+  void execute_user_command()
+  {
     handle_user_command(*UserHandler::user_command);
   }
-  UserBundle *init_user_table() {
+  UserBundle *init_user_table()
+  {
     UserBundle *user_bundle = &UserBundle{};
     return user_bundle;
   }
@@ -46,7 +54,8 @@ public:
 class LeftChannelPhase;
 class RightChannelPhase;
 
-class AudioTestData {
+class AudioTestData
+{
   float left_channel_phase;
   float right_channel_phase;
 };
