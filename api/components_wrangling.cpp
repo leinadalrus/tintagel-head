@@ -8,11 +8,11 @@ Result<T, E>::Result(T type, E expected) {}
 
 void UserHandler::handle_user_command(UserCommand user_command) {}
 
-static int audio_test_callback(const void *input_buffer, void *output_buffer,
-                               unsigned long frames_per_buffer,
-                               const PaStreamCallbackTimeInfo *time_info,
-                               PaStreamCallbackFlags status_flags,
-                               void *user_data)
+constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
+                                  unsigned long frames_per_buffer,
+                                  const PaStreamCallbackTimeInfo *time_info,
+                                  PaStreamCallbackFlags status_flags,
+                                  void *user_data)
 {
   AudioTestData *audio_tester = (AudioTestData *)user_data;
   float *output = (float *)output_buffer;
@@ -26,10 +26,11 @@ static int audio_test_callback(const void *input_buffer, void *output_buffer,
   return 0;
 }
 
-constexpr bool init_pa_system()
+const bool init_audio_system()
 {
   auto pa_err = Pa_Initialize();
-  if (pa_err == paNoError) {
+  if (pa_err == paNoError)
+  {
     pa_err = Pa_Terminate();
   }
   printf("PortAudio error: %s\n", Pa_GetErrorText(pa_err));
@@ -39,12 +40,13 @@ constexpr bool init_pa_system()
   return pa_err;
 }
 
-constexpr bool open_audio_as_defaulted(PaStream *audio_stream, char *user_data)
+const bool open_default_audio(PaStream *audio_stream, char *user_data)
 {
   AudioTestData *audio_data = (AudioTestData *)user_data;
   PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_test_callback, &audio_data);
-  if (pa_err == paNoError) {
-    pa_err = Pa_StopStream(audio_data);;
+  if (pa_err == paNoError)
+  {
+    pa_err = Pa_StopStream(audio_data);
   }
 
   return 0;
