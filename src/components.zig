@@ -1,4 +1,4 @@
-const constants = @import("imports");
+const imps = @import("imports");
 const std = @import("std");
 
 const AudioPhaser = struct {
@@ -18,16 +18,16 @@ const AudioBundle = struct {
     sound_entity: SoundEntity,
 };
 
-fn design_template_callback(template: app.File, user: *anyopaque, data: *anyopaque, size: usize, nmemb: usize) !void {
+fn design_template_callback(template: imps.File, user: *anyopaque, data: *anyopaque, size: usize, nmemb: usize) !void {
     user = @intToPtr(std.ArrayList(i32), user);
     data = @intToPtr(std.ArrayList(i32), data);
     size = std.heap.ArenaAllocator.init(std.heap.c_allocator);
     nmemb = @intToPtr([*]u8, @ptrToInt(nmemb));
     template = @intToPtr(data, user);
-    return app.File{};
+    return imps.File{};
 }
 
-fn transpose_design_template(template: app.File, data_size: usize, items_expected: *anyopaque, items_parsed: *anyopaque) !void {
+fn transpose_design_template(template: imps.File, data_size: usize, items_expected: *anyopaque, items_parsed: *anyopaque) !void {
     if (design_template_callback != true) {
         return error.CouldNotSetWriteCallback;
     }
