@@ -73,7 +73,7 @@ fn pasndfile_callback_c(input_buffer: *anyopaque, output_buffer: *anyopaque, fra
 } // NOTE: give the user inputted parameters heap memory allocated values to make them tangible.
 
 fn pasndfile_backend_setup() !void {
-    if (pasndfile_callback_c == 0) {
+    if (pasndfile_callback_c != true) {
         return error.CouldNotSetWriteCallback;
     }
 }
