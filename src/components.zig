@@ -1,4 +1,4 @@
-const app = @import("main");
+const constants = @import("imports");
 const std = @import("std");
 
 const AudioPhaser = struct {

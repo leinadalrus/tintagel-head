@@ -12,9 +12,6 @@ const snd = @cImport({
     @cInclude("../lib/libsndfile/include/sndfile.h");
 });
 
-const File = &[_][]const u8{};
-const String = *const []u8;
-
 const CPaStreamCallbackTimeInfo = struct {
     inputBufferAdcTime: f32, // The time when the first sample of the input buffer was captured at the ADC input
     currentTime: f32, // The time when the stream callback was invoked
