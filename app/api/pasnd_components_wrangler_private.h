@@ -66,10 +66,37 @@ public:
 class LeftChannelPhase;
 class RightChannelPhase;
 
-class AudioTestData
+class AudioData
 {
-  float left_channel_phase;
-  float right_channel_phase;
+  float sine[200] = {0};
+  int phase = 0;
+
+public:
+  const int audio_data_callback(const void *input_buffer, void *output_buffer,
+                                unsigned long frames_per_buffer,
+                                const PaStreamCallbackTimeInfo *time_info,
+                                PaStreamCallbackFlags status_flags,
+                                void *user_data)
+  {
+    AudioData *test_data = (AudioData *)user_data;
+    float *out = (float *)output_buffer;
+    unsigned long i;
+    int finished = 0;
+    /* avoid unused variable warnings */
+    (void)input_buffer;
+    (void)time_info;
+    (void)status_flags;
+
+    for (i = 0; i < frames_per_buffer; i++)
+    {
+      *out++ = test_data->sine[test_data->phase]; /* left */
+      test_data->phase += 1;
+      if (test_data->phase >= 200)
+        test_data->phase -= 200;
+    }
+
+    return finished;
+  }
 };
 
 class AudioPhaser
