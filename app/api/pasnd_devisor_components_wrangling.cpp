@@ -52,27 +52,37 @@ constexpr LevelDatum *discriminate_orthographic_layers()
   LevelDatum *level_datum = &LevelDatum(foreground, background); // NOTE(Daniel): -Waddress-of-temporary
 
   return level_datum;
-} // NOTE: constexpr cannot have an non-literal return type.
+} // NOTE: constexpr cannot have an non-literal return type
 
-constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
-                                  unsigned long frames_per_buffer,
-                                  const PaStreamCallbackTimeInfo *time_info,
-                                  PaStreamCallbackFlags status_flags,
-                                  void *user_data)
+constexpr int audio_data_callback(const void *input_buffer, void *output_buffer,
+                              unsigned long frames_per_buffer,
+                              const PaStreamCallbackTimeInfo *time_info,
+                              PaStreamCallbackFlags status_flags,
+                              void *user_data)
 {
-  AudioTestData *audio_tester = (AudioTestData *)user_data;
-  float *output = (float *)output_buffer;
-  unsigned int index = 0;
+  float *out = (float *)output_buffer;
+  float sine[200] = {0};
+  int phase = 0;
+  unsigned long i = 0;
+  int finished = 0;
+  /* avoid unused variable warnings */
+  (void)input_buffer;
+  (void)time_info;
+  (void)status_flags;
 
-  // for (index = 0; index < frames_per_buffer; index++) {
-  //   output += audio_tester->left_channel_phase;
-  //   output += audio_tester->right_channel_phase;
-  // }
+  for (i = 0; i < frames_per_buffer; i++)
+  {
+    *out++ = sine[phase]; /* left */
+    phase += 1;
+    if (phase >= 200)
+      phase -= 200;
+  }
 
-  return 0;
+  return finished;
 }
 
-const bool init_audio_system()
+const bool
+init_audio_system()
 {
   auto pa_err = Pa_Initialize();
   if (pa_err == paNoError)
@@ -88,8 +98,8 @@ const bool init_audio_system()
 
 constexpr PaStream *open_default_audio(PaStream *audio_stream, char *user_data)
 {
-  AudioTestData *audio_data = (AudioTestData *)user_data;
-  PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_test_callback, &audio_data);
+  AudioData *audio_data = (AudioData *)user_data;
+  PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_data_callback, &audio_data);
   if (pa_err == paNoError)
   {
     pa_err = Pa_StopStream(audio_data);
@@ -133,10 +143,10 @@ const bool query_devisor_attache()
   return false;
 }
 
-void stream_audio_parameters(PaStream *audio_stream, char *user_data)
+void stream_audio_parameters(PaStream *audio_stream, void *user_data)
 {
-  AudioTestData *audio_data = (AudioTestData *)user_data;
-  PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_test_callback, &audio_data);
+  auto audio_data = new AudioData;
+  PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_data_callback, &audio_data);
   // unsigned long frames_per_buffer = 64; // could be paFramesPerBufferUnspecified, in which case PortAudio will do its best to manage it for you, but, on some platforms, the framesPerBuffer will change in each call to the callback
   PaStreamParameters input_parameters;
   PaStreamParameters output_parameters;
@@ -152,7 +162,7 @@ void stream_audio_parameters(PaStream *audio_stream, char *user_data)
   input_parameters.hostApiSpecificStreamInfo = NULL;
   input_parameters.sampleFormat = paFloat32;
   input_parameters.suggestedLatency = Pa_GetDeviceInfo(input_device_amount)->defaultLowInputLatency;
-  input_parameters.hostApiSpecificStreamInfo = NULL;   // See you specific host's API docs for info on using this field
+  input_parameters.hostApiSpecificStreamInfo = NULL; // See you specific host's API docs for info on using this field
   // bzero(&output_parameters, sizeof(output_parameters)); // not necessary if you are filling in all the fields
   output_parameters.channelCount = CHANNEL_COUNT;
   output_parameters.device = output_device_amount;
@@ -166,13 +176,14 @@ void stream_audio_parameters(PaStream *audio_stream, char *user_data)
       &output_parameters,
       SAMPLE_RATE,
       FRAMES_PER_BUFFER,
-      paNoFlag,          // flags that can be used to define dither, clip settings and more
-      audio_test_callback, // your callback function
-      (void *)0);     // data to be passed to callback. In C++, it is frequently (void *)this
+      paNoFlag,            // flags that can be used to define dither, clip settings and more
+      audio_data_callback, // your callback function
+      (void *)0);          // data to be passed to callback. In C++, it is frequently (void *)this
   // don't forget to check errors!
 }
 
-void UserData::handle_user_command(UserCommand user_command) {
+void UserData::handle_user_command(UserCommand user_command)
+{
   query_devisor_attache();
   stream_audio_parameters(open_default_audio, this->selfish());
 }
