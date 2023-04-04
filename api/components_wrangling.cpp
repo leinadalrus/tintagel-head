@@ -91,8 +91,10 @@ constexpr LevelDatum *discriminate_orthographic_layers()
 {
   LevelForeground foreground = LevelForeground{};
   LevelBackground background = LevelBackground{};
+  // TODO(Daniel): std::move std::copy
+  LevelDatum *level_datum = &LevelDatum(foreground, background); // NOTE(Daniel): -Waddress-of-temporary
 
-  return &LevelDatum::LevelDatum(foreground, background);
+  return level_datum;
 } // NOTE: constexpr cannot have an non-literal return type.
 
 constexpr int audio_test_callback(const void *input_buffer, void *output_buffer,
