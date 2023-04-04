@@ -1,10 +1,7 @@
 /target
 /dist
 /lib
-zig-cache
-zig-out
-build.zig
-ols.json
+# /.infra/**
 *.log*
 *.exe*
 .cache
