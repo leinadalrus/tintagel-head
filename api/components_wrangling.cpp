@@ -5,13 +5,13 @@
 #include <array>
 #include <fstream>
 #include <iostream>
-#include <signal.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string>
+#include <csignal>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 
 template <class T, class E>
-Result<T, E>::Result(T type, E expected) {}
+Result<T, E>::Result(T type, E expected) {}w3
 
 void handle_signalled_exit(int index)
 {
