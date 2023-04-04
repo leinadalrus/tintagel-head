@@ -1,6 +1,8 @@
 #ifndef PASND_COMPONENTS_WRANGLER_PRIVATE_H
 #define PASND_COMPONENTS_WRANGLER_PRIVATE_H
 
+#include "../lib/portaudio/include/portaudio.h"
+#include "../lib/libsndfile/include/sndfile.h"
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>

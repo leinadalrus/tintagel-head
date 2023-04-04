@@ -2,8 +2,6 @@
 #define SAMPLE_RATE (44100)
 #define CHANNEL_COUNT (2)
 #include "pasnd_components_wrangler_private.h"
-#include "../lib/portaudio/include/portaudio.h"
-#include "../lib/libsndfile/include/sndfile.h"
 #include <array>
 #include <csignal>
 #include <fstream>
