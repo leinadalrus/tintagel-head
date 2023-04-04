@@ -11,7 +11,7 @@
 #include <cstring>
 
 template <class T, class E>
-Result<T, E>::Result(T type, E expected) {}w3
+Result<T, E>::Result(T type, E expected) {}
 
 void handle_signalled_exit(int index)
 {
