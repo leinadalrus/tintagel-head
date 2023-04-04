@@ -10,7 +10,8 @@
 			"type_traits": "cpp",
 			"xstring": "cpp",
 			"xutility": "cpp",
-			"string": "cpp"
+			"string": "cpp",
+			"system_error": "cpp"
 		}
 	}
 }

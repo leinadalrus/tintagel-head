@@ -1,9 +1,9 @@
-#ifndef COMPONENTS_H
-#define COMPONENTS_H
+#ifndef PASND_COMPONENTS_WRANGLER_PRIVATE_H
+#define PASND_COMPONENTS_WRANGLER_PRIVATE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 enum class Errors
 {
@@ -49,6 +49,18 @@ public:
     return user_bundle;
   }
   void handle_user_command(UserCommand user_command);
+};
+
+class UserData : public UserHandler
+{
+  char *user_data = (char *)0;
+
+public:
+  void handle_user_command(UserCommand user_command);
+  char *selfish()
+  {
+    return this->user_data;
+  }
 };
 
 class LeftChannelPhase;
@@ -102,4 +114,4 @@ public:
   LevelDatum(LevelForeground foreground, LevelBackground background);
 };
 
-#endif // COMPONENTS_H
+#endif // PASND_COMPONENTS_WRANGLER_PRIVATE_H
