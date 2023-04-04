@@ -30,9 +30,9 @@ public:
                                     void *user_data)
   {
     auto *test_data = (AudioData *)user_data;
-    float *out = (float *)output_buffer;
+    float *outputs = (float *)output_buffer;
     unsigned long i = 0;
-    int finished = 0;
+    int retval = 0;
     /* avoid unused variable warnings */
     (void)input_buffer;
     (void)time_info;
@@ -40,12 +40,12 @@ public:
 
     for (i = 0; i < frames_per_buffer; i++)
     {
-      *out++ = test_data->sine[test_data->phase]; /* left */
+      *outputs++ = test_data->sine[test_data->phase]; /* left */
       test_data->phase += 1;
       if (test_data->phase >= TABLE_SIZE)
         test_data->phase -= TABLE_SIZE;
     }
 
-    return finished;
+    return retval;
   } // `constexpr` keyword is great for callback functions
 };
