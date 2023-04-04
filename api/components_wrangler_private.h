@@ -60,4 +60,46 @@ class AudioTestData
   float right_channel_phase;
 };
 
+class AudioPhaser
+{
+  float left_channel;
+  float right_channel;
+};
+
+class AudioManager
+{
+};
+
+class SoundName
+{
+};
+
+class SoundEntity
+{
+};
+
+class AudioBundle
+{
+  AudioPhaser *channel_phaser;
+  SoundName *soundfile_name;
+  SoundEntity *sound_entity;
+};
+
+class LevelForeground
+{
+};
+
+class LevelBackground
+{
+};
+
+class LevelDatum
+{
+  LevelForeground foreground;
+  LevelBackground background;
+
+public:
+  LevelDatum(LevelForeground foreground, LevelBackground background);
+};
+
 #endif // COMPONENTS_H

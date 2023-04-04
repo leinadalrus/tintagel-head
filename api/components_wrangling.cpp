@@ -13,48 +13,6 @@
 template <class T, class E>
 Result<T, E>::Result(T type, E expected) {}
 
-class AudioPhaser
-{
-  float left_channel;
-  float right_channel;
-};
-
-class AudioManager
-{
-};
-
-class SoundName
-{
-};
-
-class SoundEntity
-{
-};
-
-class AudioBundle
-{
-  AudioPhaser *channel_phaser;
-  SoundName *soundfile_name;
-  SoundEntity *sound_entity;
-};
-
-class LevelForeground
-{
-};
-
-class LevelBackground
-{
-};
-
-class LevelDatum
-{
-  LevelForeground foreground;
-  LevelBackground background;
-
-public:
-  LevelDatum(LevelForeground foreground, LevelBackground background);
-};
-
 void handle_signalled_exit(int index)
 {
   switch (index)
