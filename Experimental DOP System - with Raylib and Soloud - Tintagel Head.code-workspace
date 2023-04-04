@@ -11,7 +11,11 @@
 			"xstring": "cpp",
 			"xutility": "cpp",
 			"string": "cpp",
-			"system_error": "cpp"
+			"system_error": "cpp",
+			"algorithm": "cpp",
+			"format": "cpp",
+			"xiosbase": "cpp",
+			"xlocale": "cpp"
 		}
 	}
 }
