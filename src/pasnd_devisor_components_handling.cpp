@@ -1,7 +1,7 @@
 #define FRAMES_PER_BUFFER (64)
 #define SAMPLE_RATE (44100)
 #define CHANNEL_COUNT (2)
-#include "pasnd_components_wrangler_private.h"
+#include "../inc/pasnd_components_wrangler_private.h"
 #include "../lib/portaudio/include/pa_asio.h"
 #include <array>
 #include <fstream>

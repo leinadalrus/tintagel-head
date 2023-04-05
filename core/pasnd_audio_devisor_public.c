@@ -1,6 +1,6 @@
 #include "../lib/libsndfile/include/sndfile.h"
 #include "../lib/portaudio/include/portaudio.h"
-#include "pasnd_audio_components_private.h"
+#include "../inc/pasnd_audio_components_private.h"
 
 void handle_signalled_exit(int index)
 {
