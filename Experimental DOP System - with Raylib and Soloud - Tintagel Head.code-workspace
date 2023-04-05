@@ -15,7 +15,13 @@
 			"algorithm": "cpp",
 			"format": "cpp",
 			"xiosbase": "cpp",
-			"xlocale": "cpp"
+			"xlocale": "cpp",
+			"array": "cpp",
+			"list": "cpp",
+			"valarray": "cpp",
+			"vector": "cpp",
+			"xhash": "cpp",
+			"xtree": "cpp"
 		}
 	}
 }

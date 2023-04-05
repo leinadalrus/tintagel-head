@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <csignal>
 
 enum class Errors
 {
@@ -142,5 +143,39 @@ class LevelDatum
 public:
   LevelDatum(LevelForeground foreground, LevelBackground background);
 };
+
+constexpr int audio_data_callback(const void *input_buffer, void *output_buffer,
+                                  unsigned long frames_per_buffer,
+                                  const PaStreamCallbackTimeInfo *time_info,
+                                  PaStreamCallbackFlags status_flags,
+                                  void *user_data)
+{
+  float *outputs = (float *)output_buffer;
+  float sine[200] = {0};
+  int phase = 0;
+  unsigned long i = 0;
+  int finished = 0;
+  /* avoid unused variable warnings */
+  (void)input_buffer;
+  (void)time_info;
+  (void)status_flags;
+
+  for (i = 0; i < frames_per_buffer; i++)
+  {
+    *outputs++ = sine[phase]; /* left */
+    phase += 1;
+    if (phase >= 200)
+      phase -= 200;
+  }
+} // `constexpr` keyword is great for callback functions
+
+void handle_signalled_exit(int index)
+{
+  switch (index)
+  {
+  case SIGTERM:
+    break;
+  }
+} // Best way to exit a program gracefully without using pkill (no date). Available at: https://stackoverflow.com/a/8906773.
 
 #endif // PASND_COMPONENTS_WRANGLER_PRIVATE_H

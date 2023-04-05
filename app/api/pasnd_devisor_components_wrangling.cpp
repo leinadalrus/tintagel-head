@@ -2,22 +2,13 @@
 #define SAMPLE_RATE (44100)
 #define CHANNEL_COUNT (2)
 #include "pasnd_components_wrangler_private.h"
+#include "../lib/portaudio/include/pa_asio.h"
 #include <array>
-#include <csignal>
 #include <fstream>
 #include <iostream>
 
 template <class T, class E>
 Result<T, E>::Result(T type, E expected) {}
-
-void handle_signalled_exit(int index)
-{
-  switch (index)
-  {
-  case SIGTERM:
-    break;
-  }
-} // Best way to exit a program gracefully without using pkill (no date). Available at: https://stackoverflow.com/a/8906773.
 
 constexpr bool level_document_callback(FILE document, char *user, char *data, uint8_t size, uint8_t nmemb)
 {
@@ -51,33 +42,6 @@ constexpr LevelDatum *discriminate_orthographic_layers()
 
   return level_datum;
 } // NOTE: constexpr cannot have an non-literal return type
-
-constexpr int audio_data_callback(const void *input_buffer, void *output_buffer,
-                              unsigned long frames_per_buffer,
-                              const PaStreamCallbackTimeInfo *time_info,
-                              PaStreamCallbackFlags status_flags,
-                              void *user_data)
-{
-  float *out = (float *)output_buffer;
-  float sine[200] = {0};
-  int phase = 0;
-  unsigned long i = 0;
-  int finished = 0;
-  /* avoid unused variable warnings */
-  (void)input_buffer;
-  (void)time_info;
-  (void)status_flags;
-
-  for (i = 0; i < frames_per_buffer; i++)
-  {
-    *out++ = sine[phase]; /* left */
-    phase += 1;
-    if (phase >= 200)
-      phase -= 200;
-  }
-
-  return finished;
-}
 
 const bool
 init_audio_system()
@@ -141,13 +105,22 @@ const bool query_devisor_attache()
   return false;
 }
 
-void stream_audio_parameters(PaStream *audio_stream, void *user_data)
+constexpr bool stream_processed_data(PaStream *audio_stream, void *user_data)
 {
+  if (signal(SIGTERM, handle_signalled_exit))
+  {
+    Pa_Terminate();
+  }
+
+  PaStreamParameters *input_parameters = (PaStreamParameters *)user_data;
+  PaStreamParameters *output_parameters = (PaStreamParameters *)user_data;
+  PaAsioStreamInfo *asio_output_info = (PaAsioStreamInfo *)user_data;
+
+  return false;
+
   auto audio_data = new AudioData;
   PaError pa_err = Pa_OpenDefaultStream(&audio_stream, 0, 2, paFloat32, SAMPLE_RATE, 256, audio_data_callback, &audio_data);
   // unsigned long frames_per_buffer = 64; // could be paFramesPerBufferUnspecified, in which case PortAudio will do its best to manage it for you, but, on some platforms, the framesPerBuffer will change in each call to the callback
-  PaStreamParameters input_parameters;
-  PaStreamParameters output_parameters;
 
   int input_device_amount = 1;
   int output_device_amount = 1;
@@ -155,33 +128,44 @@ void stream_audio_parameters(PaStream *audio_stream, void *user_data)
   output_device_amount = Pa_GetDeviceCount();
 
   // bzero(&input_parameters, sizeof(input_parameters)); // not necessary if you are filling in all the fields
-  input_parameters.channelCount = CHANNEL_COUNT;
-  input_parameters.device = input_device_amount;
-  input_parameters.hostApiSpecificStreamInfo = NULL;
-  input_parameters.sampleFormat = paFloat32;
-  input_parameters.suggestedLatency = Pa_GetDeviceInfo(input_device_amount)->defaultLowInputLatency;
-  input_parameters.hostApiSpecificStreamInfo = NULL; // See you specific host's API docs for info on using this field
+  input_parameters->channelCount = 2;
+  input_parameters->device = input_device_amount;
+  input_parameters->hostApiSpecificStreamInfo = NULL;
+  input_parameters->sampleFormat = paFloat32;
+  input_parameters->suggestedLatency = Pa_GetDeviceInfo(input_device_amount)->defaultLowInputLatency;
+  input_parameters->hostApiSpecificStreamInfo = NULL; // See you specific host's API docs for info on using this field
   // bzero(&output_parameters, sizeof(output_parameters)); // not necessary if you are filling in all the fields
-  output_parameters.channelCount = CHANNEL_COUNT;
-  output_parameters.device = output_device_amount;
-  output_parameters.hostApiSpecificStreamInfo = NULL;
-  output_parameters.sampleFormat = paFloat32;
-  output_parameters.suggestedLatency = Pa_GetDeviceInfo(output_device_amount)->defaultLowOutputLatency;
-  output_parameters.hostApiSpecificStreamInfo = NULL; // See you specific host's API docs for info on using this field
+  output_parameters->channelCount = 2;
+  output_parameters->device = output_device_amount;
+  output_parameters->hostApiSpecificStreamInfo = NULL;
+  output_parameters->sampleFormat = paFloat32;
+  output_parameters->suggestedLatency = Pa_GetDeviceInfo(output_device_amount)->defaultLowOutputLatency;
+  output_parameters->hostApiSpecificStreamInfo = NULL; // See you specific host's API docs for info on using this field
+
+  /* Use an ASIO specific structure. WARNING - this is not portable. */
+  asio_output_info->size = sizeof(PaAsioStreamInfo);
+  asio_output_info->hostApiType = paASIO;
+  asio_output_info->version = 1;
+  asio_output_info->flags = paAsioUseChannelSelectors;
+  int output_channel_selectors[2] = {0, 1}; /* skip channel 0 and use the second (right) ASIO device channel */
+  asio_output_info->channelSelectors = output_channel_selectors;
+  output_parameters->hostApiSpecificStreamInfo = &asio_output_info;
+
   pa_err = Pa_OpenStream(
       &audio_stream,
-      &input_parameters,
-      &output_parameters,
+      input_parameters,
+      output_parameters,
       SAMPLE_RATE,
       FRAMES_PER_BUFFER,
       paNoFlag,            // flags that can be used to define dither, clip settings and more
       audio_data_callback, // your callback function
       (void *)0);          // data to be passed to callback. In C++, it is frequently (void *)this
   // don't forget to check errors!
+  return false;
 }
 
 void UserData::handle_user_command(UserCommand user_command)
 {
   query_devisor_attache();
-  stream_audio_parameters(open_default_audio, this->selfish());
+  stream_processed_data(open_default_audio, this->selfish());
 }
