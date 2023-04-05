@@ -4,7 +4,7 @@ cxx_comp = g++
 
 target_exec := app_main
 
-build_dir := ./build
+build_dir := ./builddir
 include_dir := ./inc
 
 clang_files := $(shell find $(include_dir) -name '*.cpp' -or -name '*.c' -or  -name '*.s')
