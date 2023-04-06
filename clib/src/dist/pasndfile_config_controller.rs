@@ -1,4 +1,4 @@
-use crate::bin::pasndfile_config_structs::PaDeviceInfo;
+use crate::dist::pasndfile_config_structs::PaDeviceInfo;
 
 #[link(name = "pasnd")]
 extern "C" {
