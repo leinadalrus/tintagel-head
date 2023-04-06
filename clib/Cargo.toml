@@ -8,19 +8,19 @@ edition = "2021"
 [lib]
 name = "clibby"
 crate-type = ["cdylib"] # Dynamic libary
-path = "src/lib.rs"
+# path = "src/lib.rs"
 
-[[bin]]
-name = "bin"
-path = "src/bin/mod.rs"
+# [[bin]]
+# name = "bin"
+# path = "src/bin/mod.rs"
 
-[[bin]]
-name = "pasndfile_config_controller"
-path = "src/bin/pasndfile_config_controller.rs"
+# [[bin]]
+# name = "pasndfile_config_controller"
+# path = "src/bin/pasndfile_config_controller.rs"
 
-[[bin]]
-name = "pasndfile_config_structs"
-path = "src/bin/pasndfile_config_structs.rs"
+# [[bin]]
+# name = "pasndfile_config_structs"
+# path = "src/bin/pasndfile_config_structs.rs"
 
 [dependencies]
 arbitrary = { version = "1", features = ["derive"] }

@@ -61,13 +61,13 @@ struct PaStreamParameters {
      It can range from 1 to the value of maxInputChannels in the
      PaDeviceInfo record for the device specified by the device parameter.
     */
-    channelCount: i8,
+    channel_count: i8,
 
     /** The sample format of the buffer provided to the stream callback,
      a_ReadStream() or Pa_WriteStream(). It may be any of the formats described
      by the PaSampleFormat enumeration.
     */
-    sampleFormat: PaSampleFormat,
+    sample_format: PaSampleFormat,
 
     /** The desired latency in seconds. Where practical, implementations should
      configure their latency based on these parameters, otherwise they may
@@ -80,14 +80,14 @@ struct PaStreamParameters {
      returned by Pa_GetStreamInfo().
      @see default*Latency in PaDeviceInfo, *Latency in PaStreamInfo
     */
-    suggestedLatency: PaTime,
+    suggested_latency: PaTime,
 
     /** An optional pointer to a host api specific data structure
      containing additional information for device setup and/or stream processing.
      hostApiSpecificStreamInfo is never required for correct operation,
      if not used it should be set to NULL.
     */
-    hostApiSpecificStreamInfo: libc::c_void,
+    host_api_specific_stream_info: libc::c_void,
 }
 
 
