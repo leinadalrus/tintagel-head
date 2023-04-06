@@ -42,7 +42,7 @@ typedef struct PASNDFilename
 
 typedef struct PASNDEntity
 {
-  char(*entity)(PASNDEntity self);
+  char(*entity)(struct PASNDEntity self);
 } PASNDEntity;
 
 typedef struct PASNDBundle
