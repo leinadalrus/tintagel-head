@@ -6,7 +6,7 @@ struct PaDeviceIndex(pub u8);
 
 struct PaHostApiIndex(pub u8);
 
-struct PaDeviceInfo {
+pub(crate) struct PaDeviceInfo {
     struct_version: u8, /* this is struct version 2 */
     name: String,
     host_api_index: PaHostApiIndex,
@@ -47,8 +47,7 @@ impl Default for PaDeviceInfo {
     }
 }
 
-struct PaStreamParameters
-{
+struct PaStreamParameters {
     /** A valid device index in the range 0 to (Pa_GetDeviceCount()-1)
      specifying the device to be used or the special constant
      paUseHostApiSpecificDeviceSpecification which indicates that the actual
@@ -89,5 +88,7 @@ struct PaStreamParameters
      if not used it should be set to NULL.
     */
     hostApiSpecificStreamInfo: libc::c_void,
-
 }
+
+
+fn main() {}

@@ -2,7 +2,7 @@
 #![allow(unused_must_use)]
 #![allow(unused_imports)]
 
-mod bin;
+pub mod bin;
 
 use cxx::bridge;
 use libfuzzer_sys::fuzz_target;

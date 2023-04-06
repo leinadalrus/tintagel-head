@@ -14,6 +14,14 @@ path = "src/lib.rs"
 name = "bin"
 path = "src/bin/mod.rs"
 
+[[bin]]
+name = "pasndfile_config_controller"
+path = "src/bin/pasndfile_config_controller.rs"
+
+[[bin]]
+name = "pasndfile_config_structs"
+path = "src/bin/pasndfile_config_structs.rs"
+
 [dependencies]
 arbitrary = { version = "1", features = ["derive"] }
 axum = "0.6.11"

@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
+mod pasndfile_config_controller;
 mod pasndfile_config_structs;
-mod pasndfile_config_dcontroller;
 
 use thiserror::Error;
 
