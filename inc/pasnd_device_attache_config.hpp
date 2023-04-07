@@ -1,7 +1,7 @@
 #ifndef PASND_DEVICE_ATTACHE_CONFIG_H
 #define PASND_DEVICE_ATTACHE_CONFIG_H
 
-#include <usb.h>
+// #include <usb.h> // unknown file-type discrepancy occurring in Windows 10 SDK
 
 typedef enum UsbCompletes
 {
@@ -51,10 +51,35 @@ class SerialDeviceConfig
       UsbRequestBlockConfig{}; // NOTE(Daniel): temporary address occurs with a &&
                                // signature.
 public:
-  constexpr unsigned int
+  const unsigned int
   usb_thruput_callback(unsigned int usb_device_info_flag,
                        void *device_data_input, void *device_data_output,
                        unsigned int device_config_data_size);
+
+  constexpr UsbRequestBlockConfig discriminate_frame_value_start(void *device_data_input, unsigned int data_size_last_index, void *device_data_output);
+};
+
+class RequestBlockCommand
+{
+public:
+  RequestBlockCommand();                                            // just for general purpose inheritance
+  RequestBlockCommand(const UsbRequestBlockConfig &copyable_rhs);   // contructor for 'rhs' copying
+  RequestBlockCommand(const UsbRequestBlockConfig *moveable_rhs[]); // in a sense I have created: `**moveable_rhs`
+public:
+  void execute_command_block_request();
+};
+
+class RequestBlockHandler : public RequestBlockCommand
+{
+  RequestBlockCommand urb_command = RequestBlockCommand{};
+
+public:
+  void execute_command_block_request()
+  {
+    handle_command_block_request();
+  }
+
+  void handle_command_block_request();
 };
 
 #endif // !#ifndef PASND_DEVICE_ATTACHE_CONFIG_H
