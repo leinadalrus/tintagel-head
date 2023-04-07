@@ -82,5 +82,29 @@ public:
   void handle_command_block_request();
 };
 
+// Structure of Arrays vs Array of Structures (no date). Available at: https://stackoverflow.com/a/17924782.
+// If you are going to be accessing the R/G/B components of each pixel concurrently then AoS usually makes sense,
+// since the successive reads of R, G, B components will be contiguous and usually contained within the same cache line.
+// For CUDA this also means memory read/write coalescing.
+template <typename Chunksize>
+class RequestBlockAos
+{
+public:
+  char *device_data_input;
+  char *device_data_output;
+  Chunksize device_config_data_size;
+}; // Request Block Array of Structures
+
+// However if you are going to process color planes separately then SoA might be preferred, 
+// e.g. if you want to scale all R values by some scale factor, 
+// then SoA means that all R components will be contiguous.
+template <typename Definition, typename Slice>
+class RequestBlockSoa
+{
+public:
+  Definition device_data_input[Slice];
+  Definition device_data_output[Slice];
+  Definition device_config_data[Slice];
+}; // Request Block Structure of Arrays
+
 #endif // !#ifndef PASND_DEVICE_ATTACHE_CONFIG_H
-#define PASND_DEVICE_ATTACHE_CONFIG_H
