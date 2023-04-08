@@ -1,0 +1,14 @@
+*/target
+/dist
+/lib
+# /.infra/**
+*.log*
+*.exe*
+.cache
+.output
+.env
+.DS_Store
+.code-workspace
+.sublime-project
+.sublime-workspace
+.vscode
