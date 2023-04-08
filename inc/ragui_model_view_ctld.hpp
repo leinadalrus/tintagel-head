@@ -1,5 +1,5 @@
-#ifndef RGUI_MODEL_VIEW_CTLD_HPP
-#define RGUI_MODEL_VIEW_CTLD_HPP
+#ifndef RAGUI_MODEL_VIEW_CTLD_HPP
+#define RAGUI_MODEL_VIEW_CTLD_HPP
 
 #include <array>
 
@@ -61,4 +61,4 @@ public:
   constexpr ObserverSoA<ViewComponentObserver> remove_observer(ViewComponentObserver *mvc_observer);
 };
 
-#endif // RGUI_MODEL_VIEW_CTLD_HPP
+#endif // RAGUI_MODEL_VIEW_CTLD_HPP

@@ -7,10 +7,13 @@ Experimental project in creating a basic UI in Raylib 4.5 for the sake of Digita
 _One side of me is like intralogue-ing on the idea I should just use ImGui, but the problem with ImGui is that it doesn't have Emscripten support for web-browser usage._
 
 ##### Why not Yew and Tauri?
-_Yew and Tauri for Rust would also work really well, but it's the fact in which there's so much magic happening within Yew and Tauri that I won't be able to pull off what I need to do. Attaching a Tauri through Cargo as a CLI and as a dependency would be good, but then again, more abstraction.
-I also chose Leptos because I can isolate a lot of the events occurring in the web-application as components._
+_Yew and Tauri for Rust would also work really well, but it's the fact in which there's so much magic happening within Yew and Tauri that I won't be able to pull off what I need to do. 
+<br>
+  Attaching Tauri into a pre-existing project through Cargo with the CLI and as a dependency would be good, but then again, more abstraction.
+<br>
+  I also chose Leptos because I can isolate a lot of the events occurring in the web-application as components._
 
-`.cfg` and-or `.ini` files may also see some application in the future...
+As of note: `.cfg` and-or `.ini` files may also see some application in the future...
 
 #### David Tolnay's CXX
 
