@@ -2,7 +2,13 @@
 
 ###### _Production bolstered by a talented crew of zanies - another commedia dell'arte stock characterizer_
 
+##### The Idea:
 Experimental project in creating a basic UI in Raylib 4.5 for the sake of Digital Signal Processing and Audio Streaming/Handling.
+_One side of me is like intralogue-ing on the idea I should just use ImGui, but the problem with ImGui is that it doesn't have Emscripten support for web-browser usage._
+
+##### Why not Yew and Tauri?
+_Yew and Tauri for Rust would also work really well, but it's the fact in which there's so much magic happening within Yew and Tauri that I won't be able to pull off what I need to do. Attaching a Tauri through Cargo as a CLI and as a dependency would be good, but then again, more abstraction.
+I also chose Leptos because I can isolate a lot of the events occurring in the web-application as components._
 
 `.cfg` and-or `.ini` files may also see some application in the future...
 
@@ -31,5 +37,7 @@ David Tolnay's CXX is used for multi-language tiers of the project.
 
 ###### Why the use of multiple languages?
 
-C++14 is also employed because I love C, alas C++ enables us to use OOP practices better to practice,
+C++14 is also employed because I love C, alas C++ enables us to use OOP practices better to practice (preferably Composition over Inheritance),
 but I tend to shoot myself in the foot with it anyways, which is as to why am experimenting with new and old technologies.
+
+I will still use C, especially since writing Structures-of-Arrays in C is great, and fun to write pointer-functions for.
