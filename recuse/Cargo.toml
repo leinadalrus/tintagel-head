@@ -1,0 +1,34 @@
+[package]
+name = "recuse"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[[bin]]
+name = "frequency_mod_oscillate"
+path = "./src/client/web/frequency_mod_oscillate.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+leptos = { version = "0.2", features = ["stable"] }
+wasm-bindgen = "0.2.84"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'AudioContext',
+  'AudioDestinationNode',
+  'AudioNode',
+  'AudioParam',
+  'Document',
+  'Element',
+  'HtmlElement',
+  'GainNode',
+  'Node',
+  'OscillatorNode',
+  'OscillatorType',
+  'Window',
+]

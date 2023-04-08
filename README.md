@@ -3,6 +3,7 @@
 ###### _Production bolstered by a talented crew of zanies - another commedia dell'arte stock characterizer_
 
 Experimental project in creating a basic UI in Raylib 4.5 for the sake of Digital Signal Processing and Audio Streaming/Handling.
+_One side of me is like intralogue-ing on the idea I should just use ImGui, but the problem with ImGui is that it doesn't have Emscripten support for web-browser usage._
 
 `.cfg` and-or `.ini` files may also see some application in the future...
 

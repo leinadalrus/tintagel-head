@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-SerialDeviceConfig::SerialDeviceConfig() {}
-
 const unsigned int SerialDeviceConfig::usb_thruput_callback(
     unsigned int usb_device_info_flag, void *device_data_input,
     void *device_data_output, unsigned int device_config_data_size)
@@ -23,4 +21,13 @@ constexpr UsbRequestBlockConfig SerialDeviceConfig::discriminate_frame_value_sta
 {
   UsbRequestBlockConfig my_urb = UsbRequestBlockConfig{}; // Address is temporary, soft-copy to safely move and then destroy soft-copy
   return my_urb;
+}
+
+void RequestBlockHandler::handle_command_block_request() {
+  SerialDeviceConfig usb_config = SerialDeviceConfig{};
+}
+
+void RequestBlockCommand::execute_command_block_request() {
+  RequestBlockHandler urb_handler = RequestBlockHandler{};
+  urb_handler.handle_command_block_request();
 }

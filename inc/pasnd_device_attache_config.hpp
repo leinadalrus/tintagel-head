@@ -46,7 +46,6 @@ class UsbRequestBlockConfig
 
 class SerialDeviceConfig
 {
-  SerialDeviceConfig();
   UsbRequestBlockConfig usb_device_ini =
       UsbRequestBlockConfig{}; // NOTE(Daniel): temporary address occurs with a &&
                                // signature.
