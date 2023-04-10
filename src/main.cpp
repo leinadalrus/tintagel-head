@@ -5,11 +5,11 @@ int main(void)
   const int screen_width = 1280;
   const int screen_height = 1024;
   const char *window_title = "Inlaid Library";
-  Rectangle max_collisions[sizeof(window_title)] = {0};
 
   InitWindow(screen_width, screen_height, window_title);
 
   Rectangle player_hitbox = {1, 1, 2, 2};
+  Rectangle max_collisions[sizeof(window_title)] = {0};
   Rectangle collision_walls[sizeof(window_title)] = {10, 10, 8, 4};
 
   int column_spacing = 0;
