@@ -94,8 +94,8 @@ public:
   Chunksize device_config_data_size;
 }; // Request Block Array of Structures
 
-// However if you are going to process color planes separately then SoA might be preferred, 
-// e.g. if you want to scale all R values by some scale factor, 
+// However if you are going to process color planes separately then SoA might be preferred,
+// e.g. if you want to scale all R values by some scale factor,
 // then SoA means that all R components will be contiguous.
 template <typename Definition, typename Slice>
 class RequestBlockSoa

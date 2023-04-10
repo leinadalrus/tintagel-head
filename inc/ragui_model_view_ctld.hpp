@@ -3,28 +3,29 @@
 
 #include <array>
 
-template<typename Datatype>
-class ObserverSoA 
+template <typename Datatype>
+class ObserverSoA
 {
 public:
   std::array<Datatype, 1> observers = {0};
 };
 
-class ViewComponentEntity 
+class ViewComponentEntity
 {
 };
 
-class ModelViewCommand 
+class ModelViewCommand
 {
 public:
   void execute_command_model_view();
 };
 
-class ModelViewController : public ModelViewCommand 
+class ModelViewController : public ModelViewCommand
 {
   ModelViewCommand model_view_command = ModelViewCommand{}; // need a copy constructor
 public:
-  void execute_command_model_view() {
+  void execute_command_model_view()
+  {
     this->handle_controller_model_view();
   }
 
@@ -37,7 +38,7 @@ enum class ViewObservedEvents
   Observed,
 };
 
-class ViewComponentObserver 
+class ViewComponentObserver
 {
   friend class ViewComponentSubject;
   ViewComponentObserver *next;
@@ -48,14 +49,14 @@ public:
   const bool update_onevent_usesignal(const ViewComponentEntity &entity_component, ViewObservedEvents observed_events);
 };
 
-class ViewComponentSubject 
+class ViewComponentSubject
 {
   ViewComponentSubject() : head(nullptr) {}
   ViewComponentObserver *head;
 
   ViewComponentObserver *observers[1] = {0};
   int observer_iterator = 0;
-  
+
 public:
   constexpr ObserverSoA<ViewComponentObserver> add_observer(ViewComponentObserver *mvc_observer);
   constexpr ObserverSoA<ViewComponentObserver> remove_observer(ViewComponentObserver *mvc_observer);

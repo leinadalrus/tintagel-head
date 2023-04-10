@@ -1,4 +1,4 @@
-#include "../inc/pagui_model_view_ctld.hpp"
+#include "../inc/ragui_model_view_ctld.hpp"
 
 constexpr ObserverSoA<ViewComponentObserver> ViewComponentSubject::add_observer(ViewComponentObserver *mvc_observer)
 {

@@ -1,27 +1,40 @@
 #include "../inc/ragui_model_view_ctld.hpp"
 
-class RaguiCommand {
+class RaguiCommand
+{
 public:
   void execute_command();
 };
 
-class RaguiHandler : public RaguiCommand {
+class RaguiHandler : public RaguiCommand
+{
   RaguiCommand *ragui_command = nullptr;
 
 public:
-  void execute_command() {
+  void execute_command()
+  {
     handle_command();
   }
 
   void handle_command();
 };
 
-class WindowService {};
+class WindowService
+{
+};
 
-class NullService {};
+class NullService
+{
+};
 
-class MenuService {};
+class MenuService
+{
+};
 
-class ItemObserver {};
+class ItemObserver
+{
+};
 
-class ItemSubject {};
+class ItemSubject
+{
+};
