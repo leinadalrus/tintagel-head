@@ -6,4 +6,4 @@ set_property(TARGET tgt PROPERTY C_STANDARD 99)         # Enable C99 standard
 set(SOURCE_FILES ./core.c)
 
 # Add executable target with source files listed in SOURCE_FILES variable
-add_executable(simple_example ${SOURCE_FILES})
+add_executable(core_boilerplate ${SOURCE_FILES})
