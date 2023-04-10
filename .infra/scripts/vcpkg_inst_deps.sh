@@ -8,8 +8,9 @@ function boot() {
 }
 
 function install() {
-    vcpkg install portaudio
-    vcpkg install libsndfile
+    ./vcpkg install portaudio
+    ./vcpkg install libsndfile
+    ./vcpkg install raylib
 }
 
 function make() {

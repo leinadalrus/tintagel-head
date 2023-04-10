@@ -1,10 +1,10 @@
+#ifndef PASND_AUDIO_COMPONENTS_PRIVATE
+#define PASND_AUDIO_COMPONENTS_PRIVATE
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef PASND_AUDIO_COMPONENTS_PRIVATE
-#define PASND_AUDIO_COMPONENTS_PRIVATE
 
 const unsigned int SampleRate = 44100;
 

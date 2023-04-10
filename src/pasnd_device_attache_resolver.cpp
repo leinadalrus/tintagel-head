@@ -23,11 +23,13 @@ constexpr UsbRequestBlockConfig SerialDeviceConfig::discriminate_frame_value_sta
   return my_urb;
 }
 
-void RequestBlockHandler::handle_command_block_request() {
+void RequestBlockHandler::handle_command_block_request()
+{
   SerialDeviceConfig usb_config = SerialDeviceConfig{};
 }
 
-void RequestBlockCommand::execute_command_block_request() {
+void RequestBlockCommand::execute_command_block_request()
+{
   RequestBlockHandler urb_handler = RequestBlockHandler{};
   urb_handler.handle_command_block_request();
 }

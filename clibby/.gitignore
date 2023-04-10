@@ -1,10 +1,7 @@
 /target
-index.node
-npm-debug.log*
-**/node_modules
-**/.DS_Store
-/Cargo.lock
 /dist
+/lib
+# /.infra/**
 *.log*
 *.exe*
 .cache
@@ -14,4 +11,5 @@ npm-debug.log*
 .code-workspace
 .sublime-project
 .sublime-workspace
-
+.vscode
+Cargo.lock
