@@ -19,22 +19,42 @@ public:
   void handle_command();
 };
 
-class WindowService
+class ApplicationService
 {
+  class WindowPrototype {};
+  
+public:
+  WindowPrototype retrieve_prototype();
 };
 
-class NullService
+class NullApplicationService : public ApplicationService
 {
+public:
+  void run_application_service()
+  { // DO nothing...
+  }
+
+  void stop_application_service()
+  { // Do NOTHING!
+  }
 };
 
 class MenuService
 {
+public:
+  void init_menu_context();
+  void defer_menu_context();
 };
 
 class ItemObserver
 {
+public:
+  void on_notify(const RaguiHandler handler, int event) = 0;
 };
 
 class ItemSubject
 {
+public:
+  void add_observer(ItemObserver *item_observer);
+  void remove_observer(ItemObserver *item_observer);
 };
