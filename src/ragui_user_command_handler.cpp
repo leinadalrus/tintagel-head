@@ -49,7 +49,7 @@ public:
 class ItemObserver
 {
 public:
-  void on_notify(const RaguiHandler handler, int event) = 0;
+  void on_notify(const RaguiHandler handler, int event);
 };
 
 class ItemSubject
