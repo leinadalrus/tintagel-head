@@ -11,6 +11,7 @@ function install() {
     ./vcpkg install portaudio
     ./vcpkg install libsndfile
     ./vcpkg install raylib
+    ./vcpkg install boost
 }
 
 function make() {
