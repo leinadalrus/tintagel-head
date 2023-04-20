@@ -1,25 +1,23 @@
 use wasm_bindgen::prelude::*;
-use web_sys::{AudioContext, OscillatorType};
+use web_sys::{AudioContext, GainNode, OscillatorNode};
 
 pub fn midi_to_frequency(note: u8) -> f32 {
-    27.5 * 2f32.powf((note as f32 - 21.0) / 12.0)
+    return 27.5 * 2.0 * f32::powf((note as f32 - 21.0) / 12.0, 2.0);
 } // https://rustwasm.github.io/wasm-bindgen/examples/web-audio.html
 
 #[wasm_bindgen]
-struct FrequencyModulationOscillator {
+pub struct FrequencyModulationOscillator {
     audio_context: AudioContext,
-    primary_oscillator: web_sys::OscillatorNode,
-    secondary_oscillator: web_sys::OscillatorNode,
-    volume_gain: web_sys::GainNode,
-    gain: web_sys::GainNode,
+    primary_oscillator: OscillatorNode,
+    secondary_oscillator: OscillatorNode,
+    volume_gain: GainNode,
+    gain: GainNode,
     ratio: f32,
     gain_ratio: f32,
 }
 
 impl Drop for FrequencyModulationOscillator {
-    fn drop(&mut self) {
-        let _ = self.audio_context.close();
-    }
+    fn drop(&mut self) { let _ = self.audio_context.close(); }
 }
 
 #[wasm_bindgen]
@@ -42,18 +40,18 @@ impl FrequencyModulationOscillator {
     pub fn set_fm_amount(&mut self, amt: f32) {
         self.gain_ratio = amt;
 
-        self.gain
-            .gain()
-            .set_value(self.gain_ratio * self.primary_oscillator.frequency().value());
+        self.gain.gain().set_value(
+            self.gain_ratio * self.primary_oscillator.frequency().value(),
+        );
     }
 
     /// This should be between 0 and 1, though higher values are accepted.
     #[wasm_bindgen]
     pub fn set_fm_frequency(&mut self, amt: f32) {
         self.ratio = amt;
-        self.secondary_oscillator
-            .frequency()
-            .set_value(self.ratio * self.primary_oscillator.frequency().value());
+        self.secondary_oscillator.frequency().set_value(
+            self.ratio * self.primary_oscillator.frequency().value(),
+        );
     }
 
     #[wasm_bindgen]
@@ -78,8 +76,11 @@ impl FrequencyModulationOscillator {
         self.primary_oscillator.frequency().set_value(freq);
 
         // The frequency of the FM oscillator depends on the frequency of the
-        // primary oscillator, so we update the frequency of both in this method.
-        self.secondary_oscillator.frequency().set_value(self.ratio * freq);
+        // primary oscillator, so we update the frequency of both in this
+        // method.
+        self.secondary_oscillator
+            .frequency()
+            .set_value(self.ratio * freq);
         self.gain.gain().set_value(self.gain_ratio * freq);
     }
 }

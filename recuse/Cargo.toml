@@ -10,14 +10,26 @@ crate-type = ["cdylib", "rlib"]
 name = "frequency_mod_oscillate"
 path = "./src/client/web/frequency_mod_oscillate.rs"
 
+[[bin]]
+name = "usage_config_router"
+path = "./src/server/composer/usage_config_router.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-leptos = { version = "0.2", features = ["stable"] }
-wasm-bindgen = "0.2.84"
+axum = "0.6.11"
+futures = { version = "0.3", default-features = false }
+leptos = { version = "0.2.5", features = ["stable"] }
+serde = { version = "1.0.132", features = ["derive"] }
+thiserror = "1.0.40"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1.37"
+tracing-subscriber = { version = "0.3.16", default-features = true}
+wasm-bindgen = { version = "0.2.51", features = ["serde-serialize"]  }
+wasm-bindgen-futures = "0.4.1"
 
 [dependencies.web-sys]
-version = "0.3.4"
+version = "0.3.5"
 features = [
   'AudioContext',
   'AudioDestinationNode',
