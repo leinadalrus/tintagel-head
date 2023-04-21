@@ -1,4 +1,7 @@
-*/target
+*target/**
+*dist/**
+*lib/**
+# */.infra/**
 index.node
 npm-debug.log*
 **/node_modules
