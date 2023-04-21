@@ -1,6 +1,6 @@
 use axum::{
     http::StatusCode,
-    response::IntoResponse,
+    response::{Html, IntoResponse},
     routing::{get, post},
     Json, Router,
 };
@@ -35,18 +35,21 @@ async fn index_page(
 }
 
 // basic handler that responds with a static string
-async fn root() -> &'static str {
-    "/"
-}
+async fn root() -> &'static str { "/" }
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
-    let app = Router::new();
+
+    let app_router = Router::new().route(
+        root(),
+        get(|| async { Html("<i>Hello, and good tidings.</i>") }),
+    );
     let local_host_address = SocketAddr::from(([127, 0, 0, 1], 3000));
+    
     tracing::debug!("Listening on: {:?}", local_host_address);
     axum::Server::bind(&local_host_address)
-        .serve(app.into_make_service())
+        .serve(app_router.into_make_service())
         .await
         .unwrap();
 }

@@ -17,8 +17,10 @@ path = "./src/server/composer/usage_config_router.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.70"
 axum = "0.6.11"
 futures = { version = "0.3", default-features = false }
+httpc-test = "0.1.1"
 leptos = { version = "0.2.5", features = ["stable"] }
 serde = { version = "1.0.132", features = ["derive"] }
 thiserror = "1.0.40"

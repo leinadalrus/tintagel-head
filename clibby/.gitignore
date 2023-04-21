@@ -8,6 +8,7 @@
 .output
 .env
 .DS_Store
+*Cargo.lock
 .code-workspace
 .sublime-project
 .sublime-workspace
