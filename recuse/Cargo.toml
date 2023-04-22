@@ -14,6 +14,10 @@ path = "./src/client/web/frequency_mod_oscillate.rs"
 name = "usage_config_router"
 path = "./src/server/composer/usage_config_router.rs"
 
+[[bin]]
+name = "arbitrary_chord_translation"
+path = "./src/views/arbitrary_chord_translation.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
