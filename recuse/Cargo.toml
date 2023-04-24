@@ -25,6 +25,7 @@ anyhow = "1.0.70"
 axum = "0.6.11"
 futures = { version = "0.3", default-features = false }
 httpc-test = "0.1.1"
+libc = "0.2.142"
 leptos = { version = "0.2.5", features = ["stable"] }
 serde = { version = "1.0.132", features = ["derive"] }
 thiserror = "1.0.40"
