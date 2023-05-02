@@ -1,12 +1,13 @@
 pub mod client;
 pub mod server;
-pub mod shared;
-pub mod views;
 
 use leptos::{leptos_dom::ev::SubmitEvent, *};
 
-extern "C" {
-    fn invoke(cmd: &str, args: libc::size_t) -> std::ffi::c_void;
+#[cxx::bridge]
+mod ffi {
+    unsafe extern "C++" {
+        unsafe fn invoke(cmd: &str, args: isize);
+    }
 }
 
 #[component]
@@ -29,7 +30,7 @@ fn HandleAnimationBlock(cx: Scope, data_size: i64) -> impl IntoView {
             }
 
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-            invoke(cmd, args);
+            ffi::invoke(cmd, args);
         });
     };
 
