@@ -1,8 +1,10 @@
 use crate::dist::pasndfile_config_structs::PaDeviceInfo;
 
-#[link(name = "pasnd")]
-extern "C" {
-    fn handle_query_attache_device(pa_device_info: PaDeviceInfo);
+#[cxx::bridge]
+mod ffi {
+    unsafe extern "C++" {
+        unsafe fn handle_query_attache_device(pa_device_info: PaDeviceInfo);
+    }
 }
 
 fn main() {
