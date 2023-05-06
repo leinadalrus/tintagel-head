@@ -2,8 +2,8 @@
 #include <cmath>
 
 #define _USE_MATH_DEFINES
-#ifndef M_PI (3.14159265358979323846)
+#ifndef M_PI
 #define M_PI (3.14159265358979323846)
 #endif
 
-int DistributedHashtable::init_hashtable() {}
+int init_distributed_hashtable(EntityBundle *bundled_entity) { return 0; }
