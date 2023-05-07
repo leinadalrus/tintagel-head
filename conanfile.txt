@@ -1,0 +1,15 @@
+[requires]
+boost/1.81.0
+freetype/2.13.0
+glib/2.76.2
+libcurl/8.0.1
+libjpeg/9e
+mpg123/1.31.2
+nlohmann_json/3.11.2
+raylib/4.0.0
+spdlog/1.11.0
+zlib/1.2.11
+
+[generators]
+PkgConfigDeps
+MesonToolchain
