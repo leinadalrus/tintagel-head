@@ -3,7 +3,7 @@
 /target
 /dist
 *ext/**
-/lib
+# /lib
 # /.infra/**
 *.log*
 *.exe*
