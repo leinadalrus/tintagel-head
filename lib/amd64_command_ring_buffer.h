@@ -1,7 +1,7 @@
-#ifndef AMD_COMMAND_RING_BUFFER_H
-#define AMD_COMMAND_RING_BUFFER_H
+#ifndef AMD64_COMMAND_RING_BUFFER_H
+#define AMD64_COMMAND_RING_BUFFER_H
 
-#include "amd_command_buffer_handler.h"
+#include "amd64_command_buffer_handler.h"
 
 enum RbStatusCodes {
   SUCCESS = 0x0000, // possibly change bytecode for bitwise ops
@@ -42,7 +42,7 @@ typedef struct IntervalMatrix {
 } IntervalMatrix;
 
 typedef struct DistributedHashkeys {
-  int keys[];
+  int keys[0];
 } DistributedHashkeys;
 
 typedef struct DistributedHashtable {
@@ -58,4 +58,4 @@ typedef struct ArbitraryNetwork {
   struct Chord_t *chord_t;
 } ArbitraryNetwork;
 
-#endif // AMD_COMMAND_RING_BUFFER_H
+#endif // AMD64_COMMAND_RING_BUFFER_H

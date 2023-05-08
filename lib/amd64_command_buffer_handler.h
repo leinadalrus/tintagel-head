@@ -1,5 +1,5 @@
-#ifndef AMD_COMMAND_BUFFER_HANDLER_H
-#define AMD_COMMAND_BUFFER_HANDLER_H
+#ifndef AMD64_COMMAND_BUFFER_HANDLER_H
+#define AMD64_COMMAND_BUFFER_HANDLER_H
 
 #include <stdint.h>
 #include <stdio.h>
@@ -52,4 +52,4 @@ int read_handled_context_argument(int (*interface_handle_callback)(),
                                   char *user_data_header,
                                   signed int status_flag, uint64_t data_size);
 
-#endif // AMD_COMMAND_BUFFER_HANDLER_H
+#endif // AMD64_COMMAND_BUFFER_HANDLER_H

@@ -1,7 +1,7 @@
 #ifndef POWERPC_VIRTUAL_STORAGE_MODEL_H
 #define POWERPC_VIRTUAL_STORAGE_MODEL_H
 
-#include "amd_command_ring_buffer.h"
+#include "amd64_command_ring_buffer.h"
 
 // VirtualAddressSpace
 // must be larger than the EffectiveAddressSpace

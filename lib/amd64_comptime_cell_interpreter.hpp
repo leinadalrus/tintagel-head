@@ -1,15 +1,15 @@
-#ifndef AMD_X86_64_CELL_INTERPRETER_HPP
-#define AMD_X86_64_CELL_INTERPRETER_HPP
+#ifndef AMD_64_64_CELL_INTERPRETER_HPP
+#define AMD_64_64_CELL_INTERPRETER_HPP
 
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
-#include "amd_x86_64_cell_arenas.hpp"
+#include "amd64_comptime_cell_arenas.hpp"
 
 // TODO decompiler/recompiler for cross-platform usage
-template <typename T> class AmdX86ArenaAllocator {
+template <typename T> class Amd64ArenaAllocator {
   ArenaState *member_any_opaque_state;
 
 public:
@@ -20,15 +20,15 @@ public:
   }
 };
 
-class AmdX86AbstractSyntaxTree {};
+class Amd64AbstractSyntaxTree {};
 
-class AmdX86Treesitter {
-  AmdX86AbstractSyntaxTree *abstract_syntax_tree;
+class Amd64Treesitter {
+  Amd64AbstractSyntaxTree *abstract_syntax_tree;
 };
 
-class AmdX86Lexer {
-  AmdX86AbstractSyntaxTree *abstract_syntax_tree;
-  AmdX86Treesitter *ast_treesitter;
+class Amd64Lexer {
+  Amd64AbstractSyntaxTree *abstract_syntax_tree;
+  Amd64Treesitter *ast_treesitter;
 };
 
-#endif // AMD_X86_64_CELL_INTERPRETER_HPP
+#endif // AMD_64_64_CELL_INTERPRETER_HPP
