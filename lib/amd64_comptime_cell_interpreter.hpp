@@ -7,19 +7,7 @@
 #include <cstring>
 
 #include "amd64_comptime_cell_arenas.hpp"
-
-enum Amd64GuestPolicy {
-  NODBG = 0x0000,
-  NOKS = 0x0001,
-  ES = 0x0002,
-  NOSEND = 0x0003,
-  GPDOMAIN = 0x0004,
-  SEV = 0x0005,
-  RESERVED = 0x0000,  // Reserved. Should be zero. Bit(s) are := 15:6
-  API_MAJOR = 0x0007, // Bit(s) is := 7:0
-  API_MINOR = 0x0007, // Bit(s) is := 7:0
-}; // The guest must not be transmitted to another platform with a lower
-   // firmware version.
+#include "amd64_hypervisor_guest_policy.h"
 
 // TODO decompiler/recompiler for cross-platform usage
 template <typename T> class Amd64ArenaAllocator {
