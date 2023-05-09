@@ -1,5 +1,5 @@
-#ifndef AMD_64_64_CELL_INTERPRETER_HPP
-#define AMD_64_64_CELL_INTERPRETER_HPP
+#ifndef AMD64_COMPTIME_CELL_INTERPRETER_HPP
+#define AMD64_COMPTIME_CELL_INTERPRETER_HPP
 
 #include <cstdint>
 #include <cstdio>
@@ -32,4 +32,4 @@ class Amd64Lexer {
   Amd64Treesitter *ast_treesitter;
 };
 
-#endif // AMD_64_64_CELL_INTERPRETER_HPP
+#endif // AMD64_COMPTIME_CELL_INTERPRETER_HPP
