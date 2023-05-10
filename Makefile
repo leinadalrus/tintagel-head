@@ -1,34 +1,37 @@
-SHELL = /bin/bash
+CC := gcc
+CXX := g++
 
-cxx_comp = g++
+TARGET_EXEC := main
+OUT_DIR := ./output
+CORE_DIRS := ./core
 
-target_exec := app_main
+SRCS := $(shell find $(CORE_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+OBJS := $(SRCS%=$(OUT_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
-build_dir := ./builddir
-include_dir := ./inc
+LIB_DIRS := $(shell find $(CORE_DIRS) -type d)
+LIB_FLAGS := $(addprefix -I,$(LIB_DIRS))
 
-clang_files := $(shell find $(include_dir) -name '*.cpp' -or -name '*.c' -or  -name '*.s')
+CFLAGS := -g -Wall
+CPPFLAGS := $(LIB_FLAGS) -MMD -MP
+LDFLAGS := -g -Wall
 
-static_objs := $(clang_files:%=$(build_dir)/%.o)
+$(OUT_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
-proj_deps := $(static_objs:.o=.d)
-
-items_dir := $(shell find $(include_dir) -type d)
-items_flags := $(addprefix -I,$(items_dir))
-
-cxx_flags := $(items_flags) -MMD -MP # generate makefiles with .d output
-
-# The final build step.
-$(build_dir)/$(target_exec): $(static_objs)
-	$(cxx_comp) $(static_objs) -o $@ $(LDFLAGS)
-
-# Build step for C++ source
-$(build_dir)/%.cpp.o: %.cpp
+$(OUT_DIR)/%.c.o: %.c
 	mkdir -p $(dir $@)
-	$(cxx_comp) $(cxx_flags) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+x86_64: ./core/main.cpp
+	$(CXX-$(AMD64)) $(INCLUDES) 
+	$(CXX-$(AMD64)) $(LIBS) $(LDFLAGS) # coreboot cli commands arguments
+
+%.o: %.c
+	$(CXX-) -c -o $@ $<
 
 .PHONY: clean
-	clean:
-		rm -r $(build_dir)
+clean:
+	rm -f $(OUT_DIR)
 
--include $(proj_deps)
+-include $(DEPS)
