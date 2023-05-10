@@ -5,19 +5,18 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <functional>
 
 namespace External {
 namespace Coreboot {
 enum class Amd64Entry {};
-};
+}; // namespace Coreboot
 }; // namespace External
 
 namespace SynergisticProcessingUnit {
 namespace Lint {
 class Thread {};
 
-Thread *create_thread(std::function<void()> functor);
+Thread *create_thread(Thread *anyopaque);
 void free_thread(Thread *thread);
 void block_thread(Thread *thread);
 
@@ -34,10 +33,13 @@ void sleep_linting(uint64_t seconds);
 }; // namespace SynergisticProcessingUnit
 
 namespace MicroProgramCounter {
+class MicroProgramCounter {};
+
 int initialize_microprogram_counter();
 void deinitialize_microprogram_counter();
 void begin_microprogram_counter();
 void end_microprogram_counter();
+
 int send_microprogram_counters_packet(uint8_t data, int length,
                                       uint8_t timestamp);
 int receive_microprogram_counters_packet(uint8_t data, int length,
@@ -61,6 +63,12 @@ class ArenaData {
 
 class ArenaState {
   ArenaData state;
+};
+
+class LintArenaBundle {
+  SynergisticProcessingUnit::Lint::Thread thread;
+  SynergisticProcessingUnit::Lint::Mutex mutex;
+  MicroProgramCounter::MicroProgramCounter microprogram_counter;
 };
 
 // TODO Singleton-Strategy Pattern for Contextual-Root-Objects'(s data)
