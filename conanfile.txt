@@ -1,4 +1,5 @@
 [requires]
+aws-c-common/0.8.2
 boost/1.81.0
 freetype/2.13.0
 glib/2.76.2
