@@ -5,7 +5,7 @@
 #include "spe_function_offload_hook.hpp"
 #include <cstdint>
 
-#ifdef AMD64_ORC_JIT_INTERPRETER_H
+#ifdef AMD64_ORC_JIT_INTERPRETER_HPP
 extern int amd64_orcv2_jit_interpreter_toggle;
 #endif
 

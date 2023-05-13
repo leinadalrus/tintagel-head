@@ -2,7 +2,7 @@
 // need to have this include file separated
 // and outside of include guards
 
-#ifndef AMD64_ORC_JIT_INTERPRETER_H
+#ifndef AMD64_ORC_JIT_INTERPRETER_HPP
 extern int amd64_orcv2_jit_interpreter_toggle;
 #endif
 
