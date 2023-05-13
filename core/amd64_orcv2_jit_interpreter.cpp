@@ -61,9 +61,12 @@ int initialise_external_jit_interpreter(OrcV2JitInterpreter *interpreter) {
 void deinitialise_external_jit_interpreter(OrcV2JitInterpreter *interpreter) {
   free(interpreter);
   interpreter = NULL;
-  OrcV2JitInterpreter *new_interpreter =
-      memset(interpreter, NULL, sizeof(OrcV2JitInterpreter));
-  interpreter = new_interpreter;
+  OrcV2JitInterpreter new_interpreter =
+      OrcV2JitInterpreter{.phantom_marker = std::nullptr_t()};
+  // std::nullptr_t() is in-turn the keyword: nullptr
+  // .phantom_marker is a scalar without a pointer within the struct's member
+  // properties
+  interpreter = &new_interpreter;
 }
 
 void reset_external_jit_interpreter(OrcV2JitInterpreter *interpreter) {

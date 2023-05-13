@@ -1,11 +1,16 @@
 #ifndef AMD64_ORCV2_JIT_INTERPRETER_HPP
 #define AMD64_ORCV2_JIT_INTERPRETER_HPP
 
+#include "function_offload_phantom_marker.hpp"
 #include "spe_function_offload_hook.hpp"
 #include <cstdint>
 
 #ifdef AMD64_ORC_JIT_INTERPRETER_H
 extern int amd64_orcv2_jit_interpreter_toggle;
+#endif
+
+#ifndef VECTOR_SLICE_CHUNK
+#define VECTOR_SLICE_CHUNK 255
 #endif
 
 typedef struct MemoryRegion {
@@ -42,6 +47,7 @@ typedef struct OrcV2JitAdapter {
 } OrcV2JitAdapter;
 
 typedef struct OrcV2JitInterpreter {
+  FunctionOffloadPhantomMarker *phantom_marker;
 } OrcV2JitInterpreter;
 
 typedef struct OrcV2DataBundle {
