@@ -1,110 +1,82 @@
-#include "C:/raylib/raylib/src/raylib.h"
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <raylib.h>
 
-int main(void) {
-  const int screen_width = 1280;
-  const int screen_height = 1024;
-  const char *window_title = "Inlaid Library";
+class Health {
+  int hp; // health points
+};
 
-  InitWindow(screen_width, screen_height, window_title);
+class Position {
+  Vector2 x, y;
+};
 
-  Rectangle player_hitbox = {1, 1, 2, 2};
-  Rectangle max_collisions[sizeof(char)] = {0};
-  Rectangle collision_walls[sizeof(char)] = {10, 10, 8, 4};
+class PlayerEntity {};
 
-  int column_spacing = 0;
+class PlayerName {};
 
-  for (int i = 0; i < sizeof(char); i++) {
-    collision_walls[i].width = (float)GetRandomValue(50, 200);
-    collision_walls[i].height = (float)GetRandomValue(100, 800);
-    collision_walls[i].y = screen_height - 130.0f - collision_walls[i].height;
-    collision_walls[i].x = -6000.0f + column_spacing;
+class PlayerSprite {
+  Rectangle dimensions;
+  Texture texture;
+};
 
-    column_spacing += (int)collision_walls[i].width;
-  }
+class PlayerBundle {
+  PlayerEntity entity;
+  PlayerName name;
+  PlayerSprite sprite;
+  Health health;
+  Position position;
+};
 
-  Camera2D primary_camera = {0};
-  primary_camera.target =
-      (Vector2){player_hitbox.x + 20.0f, player_hitbox.y + 20.0f};
-  primary_camera.offset = (Vector2){screen_width / 2.0f, screen_height / 2.0f};
-  primary_camera.rotation = 0.0f;
-  primary_camera.zoom = 1.0f;
+class EnemyEntity {};
 
-  SetTargetFPS(10);
+class EnemyName {
+  const char *name;
+};
+
+class EnemySprite {
+  Rectangle dimensions;
+  Texture texture;
+};
+
+class EnemyBundle {
+  EnemyEntity entity;
+  EnemyName name;
+  EnemySprite sprite;
+  Health health;
+  Position position;
+};
+
+class FriendlyEntity {};
+
+class FriendlyName {
+  const char *name;
+};
+
+class FriendlySprite {
+  Rectangle dimensions;
+  Texture texture;
+};
+
+class FriendlyBundle {
+  FriendlyEntity entity;
+  FriendlyName name;
+  FriendlySprite sprite;
+  Health health;
+  Position position;
+};
+
+int main() {
+  InitWindow(600, 400, "Inlaid Imperial");
+  Camera2D camera = {0};
 
   while (!WindowShouldClose()) {
-    // Update
-    //----------------------------------------------------------------------------------
-    // Player movement
-    if (IsKeyDown(KEY_RIGHT))
-      player_hitbox.x += 2;
-    else if (IsKeyDown(KEY_LEFT))
-      player_hitbox.x -= 2;
-
-    // Camera target follows player
-    primary_camera.target =
-        (Vector2){player_hitbox.x + 20, player_hitbox.y + 20};
-
-    // Camera rotation controls
-    if (IsKeyDown(KEY_A))
-      primary_camera.rotation--;
-    else if (IsKeyDown(KEY_S))
-      primary_camera.rotation++;
-
-    // Limit camera rotation to 80 degrees (-40 to 40)
-    if (primary_camera.rotation > 40)
-      primary_camera.rotation = 40;
-    else if (primary_camera.rotation < -40)
-      primary_camera.rotation = -40;
-
-    // Camera zoom controls
-    primary_camera.zoom += ((float)GetMouseWheelMove() * 0.05f);
-
-    if (primary_camera.zoom > 3.0f)
-      primary_camera.zoom = 3.0f;
-    else if (primary_camera.zoom < 0.1f)
-      primary_camera.zoom = 0.1f;
-
-    // Camera reset (zoom and rotation)
-    if (IsKeyPressed(KEY_R)) {
-      primary_camera.zoom = 1.0f;
-      primary_camera.rotation = 0.0f;
-    }
-    //----------------------------------------------------------------------------------
-
-    // Draw
-    //----------------------------------------------------------------------------------
     BeginDrawing();
-
+    BeginMode2D(camera);
     ClearBackground(BLANK);
-
-    BeginMode2D(primary_camera);
-
-    DrawRectangle(-6000, 320, 13000, 8000, DARKGRAY);
-
-    for (int i = 0; i < sizeof(char); i++)
-      DrawRectangleRec(max_collisions[i], DARKGRAY);
-
-    DrawRectangleRec(player_hitbox, ORANGE);
-
-    DrawLine((int)primary_camera.target.x, -screen_height * 10,
-             (int)primary_camera.target.x, screen_height * 10, RAYWHITE);
-    DrawLine(-screen_width * 10, (int)primary_camera.target.y,
-             screen_width * 10, (int)primary_camera.target.y, RAYWHITE);
-
-    EndMode2D();
-
-    DrawRectangle(0, 0, screen_width, 5, ORANGE);
-    DrawRectangle(0, 5, 5, screen_height - 10, ORANGE);
-    DrawRectangle(screen_width - 5, 5, 5, screen_height - 10, ORANGE);
-    DrawRectangle(0, screen_height - 5, screen_width, 5, ORANGE);
-
-    DrawRectangle(10, 10, 250, 113, Fade(SKYBLUE, 0.5f));
-    DrawRectangleLines(10, 10, 250, 113, PURPLE);
-
     EndDrawing();
   }
 
-  CloseWindow(); // Close window and OpenGL context
-
+  CloseWindow();
   return 0;
 }
