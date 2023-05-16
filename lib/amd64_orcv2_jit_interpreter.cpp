@@ -1,4 +1,4 @@
-#include "../lib/amd64_orcv2_jit_interpreter.hpp"
+#include "amd64_orcv2_jit_interpreter.hpp"
 // need to have this include file separated
 // and outside of include guards
 
@@ -6,8 +6,8 @@
 extern int amd64_orcv2_jit_interpreter_toggle;
 #endif
 
-#include <stdint.h>
-#include <string.h>
+#include <cstdint>
+#include <cstring>
 
 void load_maked_coreboot_bios() {}
 
@@ -48,11 +48,11 @@ int initialise_external_jit_interpreter(OrcV2JitInterpreter *interpreter) {
   ArenaState *arena_state;
   MemoryRegion *memory_region;
 
-  uint8_t destination = (unsigned char)arena_state->arena_data.destination;
+  uint8_t destination = (unsigned char)arena_state->arena_state().d();
   // arena_data->destination is mutable:
   destination = destination >> memory_region->memory;
   // arena_data->table_data is the bitmask for bit-ops
-  uint32_t table = (unsigned int)arena_state->arena_data.table_data;
+  uint32_t table = (unsigned int)arena_state->arena_state().td();
   table = table >> memory_region->mask;
 
   return 0;

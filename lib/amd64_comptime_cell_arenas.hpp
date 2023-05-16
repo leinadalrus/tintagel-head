@@ -57,12 +57,21 @@ int receive_microprogram_counters_replies(uint8_t data, uint8_t timestamp,
 }; // namespace MicroProgramCounter
 
 class ArenaData {
-  void *destination, *source, *table_data;
+  intptr_t destination, source, table_data;
   uint16_t data_size;
+
+public:
+  intptr_t d() { return this->destination; }
+  intptr_t s() { return this->source; }
+  intptr_t td() { return this->table_data; }
+  uint16_t sz() { return this->data_size; }
 };
 
 class ArenaState {
   ArenaData state;
+
+public:
+  ArenaData arena_state() { return state; }
 };
 
 class LintArenaBundle {

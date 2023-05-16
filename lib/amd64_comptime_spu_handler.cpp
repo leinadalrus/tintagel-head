@@ -1,4 +1,4 @@
-#include "../lib/amd64_comptime_spu_handler.hpp"
+#include "amd64_comptime_spu_handler.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
