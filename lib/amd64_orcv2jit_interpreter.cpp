@@ -10,7 +10,7 @@ extern int amd64_orcv2_jit_interpreter_toggle;
 #include <cstdint>
 #include <cstring>
 
-void load_maked_coreboot_bios() {}
+void load_initialized_coreboot_bios() {}
 
 int get_orcv2_memory_region(uint32_t address, int is_written,
                             MemoryRegion *memory_region) {

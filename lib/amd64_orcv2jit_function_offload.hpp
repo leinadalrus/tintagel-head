@@ -5,6 +5,10 @@
 #include <cstdint>
 #include <cstdio>
 
+#ifndef DETOURS_ORCV2
+#define DETOURS_ORCV2
+#endif // !DETOURS_ORCV2
+
 class SynergisticProcessingUnitHandler {
   FILE *file;
 

@@ -27,7 +27,7 @@ typedef struct OrcV2RegionBundle {
   OrcV2InternalClock orcv2_internal_clock;
 } OrcV2RegionBundle;
 
-void load_maked_coreboot_bios();
+void load_initialized_coreboot_bios();
 int get_orcv2_memory_region(uint32_t address, int is_written,
                             MemoryRegion *memory_region);
 
