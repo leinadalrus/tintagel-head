@@ -1,4 +1,5 @@
 #include "amd64_orcv2jit_interpreter.hpp"
+#include "spu_treewalk_linter.hpp" // this contains the ArenaState classes
 // need to have this include file separated
 // and outside of include guards
 
