@@ -1,7 +1,7 @@
 #ifndef AMD64_COMPTIME_SPU_HANDLER_HPP
 #define AMD64_COMPTIME_SPU_HANDLER_HPP
 
-#include "amd64_comptime_cell_arenas.hpp"
+#include "spu_treewalk_linter.hpp"
 #include <cstdint>
 #include <cstdio>
 

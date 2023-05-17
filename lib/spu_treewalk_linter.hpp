@@ -1,5 +1,5 @@
-#ifndef AMD_COMPTIME_CELL_ARENAS_HPP
-#define AMD_COMPTIME_CELL_ARENAS_HPP
+#ifndef SPU_TREEWALK_LINTER_HPP
+#define SPU_TREEWALK_LINTER_HPP
 
 #include <cstdint>
 #include <cstdio>
@@ -8,7 +8,7 @@
 
 namespace External {
 namespace Coreboot {
-enum class Amd64Entry {};
+// enum class Amd64Entry {};
 }; // namespace Coreboot
 }; // namespace External
 
@@ -94,4 +94,4 @@ protected:
                                   // inherited classes
 };
 
-#endif // AMD_COMPTIME_CELL_ARENAS_HPP
+#endif // SPU_TREEWALK_LINTER_HPP
