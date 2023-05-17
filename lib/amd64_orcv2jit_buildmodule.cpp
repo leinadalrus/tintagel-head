@@ -25,9 +25,13 @@
 #include <handleapi.h>
 #include <iostream>
 #include <memory>
+#ifndef PCONTEXT
+#define PCONTEXT
+#define pContextRecord
 #include <processthreadsapi.h>
 #include <windows.h>
 #include <winnt.h>
+#endif // !_CONTEXT
 #endif
 
 #ifdef DETOURS_ORCV2
