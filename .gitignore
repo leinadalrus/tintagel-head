@@ -1,6 +1,9 @@
+/builddir
+/build
 /target
 /dist
-/lib
+*ext/**
+# /lib
 # /.infra/**
 *.log*
 *.exe*
@@ -8,6 +11,9 @@
 .output
 .env
 .DS_Store
-.code-workspace
-.sublime-project
-.sublime-workspace
+*Cargo.lock
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.vscode
+*.lock

@@ -1,5 +1,14 @@
-CC := gcc
+CC := gcc 
 CXX := g++
+
+BIN_AMD64 = coreboot_bios_amd64
+LLVM_SHARED_OBJ = /usr/lib/llvm-10/libLLVM-10.so
+# Specify the output file to be filename.
+# Make the output be LLVM bitcode (with -c) 
+# or assembly (with -s) instead of native object (or assembly). 
+# If -emit-llvm is given without either -c or -S it has no effect.
+LLVM_ASM_OUT = llvm-gcc -o $(BIN_AMD64) -emit-llvm -s
+LLVM_OBJCOPY = llvm-objcopy
 
 TARGET_EXEC := main
 OUT_DIR := ./output
@@ -23,10 +32,6 @@ $(OUT_DIR)/%.c.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-x86_64: ./core/main.cpp
-	$(CXX-$(AMD64)) $(INCLUDES) 
-	$(CXX-$(AMD64)) $(LIBS) $(LDFLAGS) # coreboot cli commands arguments
-
 %.o: %.c
 	$(CXX-) -c -o $@ $<
 
@@ -35,3 +40,11 @@ clean:
 	rm -f $(OUT_DIR)
 
 -include $(DEPS)
+
+x86_64: ./core/main.cpp
+	$(CXX-$(AMD64)) $(INCLUDES) 
+	$(CXX-$(AMD64)) $(LIBS) $(LDFLAGS) # coreboot cli commands arguments
+
+objcopy_shared:
+	$(LLVM_ASM_OUT)
+	$(LLVM_OBJCOPY) -O binary $(BIN_AMD64).o $(BIN_AMD64).bin

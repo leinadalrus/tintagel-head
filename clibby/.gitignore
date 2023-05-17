@@ -1,0 +1,16 @@
+*target/**
+*dist/**
+*lib/**
+# */.infra/**
+*.log*
+*.exe*
+.cache
+.output
+.env
+.DS_Store
+*Cargo.lock
+.code-workspace
+.sublime-project
+.sublime-workspace
+.vscode
+Cargo.lock

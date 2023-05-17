@@ -1,0 +1,20 @@
+*target/**
+*dist/**
+*lib/**
+# */.infra/**
+index.node
+npm-debug.log*
+**/node_modules
+**/.DS_Store
+*Cargo.lock
+/dist
+*.log*
+*.exe*
+.cache
+.output
+.env
+.DS_Store
+.code-workspace
+.sublime-project
+.sublime-workspace
+
