@@ -36,7 +36,7 @@
 
 #ifdef DETOURS_ORCV2
 
-extern "C" BYTE Ppsp_Entry_Codes[]; // SPE into PPE Entry Codes
+extern "C" BYTE Speppe_Entry_Codes[]; // SPE into PPE Entry Codes
 
 // Build-module with DLL
 // class BuildmoduleJit {
