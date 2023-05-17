@@ -21,7 +21,7 @@ David Tolnay's CXX is used for multi-language tiers of the project.
 
 - I have C++14 code in the high-level programming tiers of the project because it's _"safer."_
 - It also helps if we in turn have to 'interop' with another user's C++ code, especially with Soloud being unupdated for years.
-- 'C99' itself will not allow us to write code in a modern sense with polmorphism/inheritance.
+- 'C99' itself will not allow us to write code in a modern sense with polymorphism/inheritance.
 - At some point of the program we'll need to use a Strategy design pattern with a Singleton since we're working with-
   -peripherals after all.
 
