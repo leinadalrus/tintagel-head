@@ -1,38 +1,10 @@
+#pragma warning(pop)
+#if _MSC_VER > 1400
+#pragma warning(disable : 6102 6103)
+#endif
+
+#include "../inc/ndebug_variadic_args.hpp"
 #include "amd64_orcv2jit_function_offload.hpp"
-
-#ifdef __linux__
-#include "/llvm/adt/stringref.h"
-#include "/llvm/executionengine/orc/compileutils.h"
-#include "/llvm/executionengine/orc/core.h"
-#include "/llvm/executionengine/orc/executionutils.h"
-#include "/llvm/executionengine/orc/ircompilelayer.h"
-#include "/llvm/executionengine/orc/jittargetmachinebuilder.h"
-#include "/llvm/executionengine/orc/rtdyldobjectlinkinglayer.h"
-#include "/llvm/executionengine/sectionmemorymanager.h"
-#include "/llvm/ir/datalayout.h"
-#include "/llvm/ir/llvmcontext.h"
-#include <memory.h>
-#include <stdio.h>
-#include <stdlib.h>
-#endif // !__linux__
-
-#ifdef _WIN32
-#include <cstdio>
-#include <cstdlib>
-#ifdef DETOURS_INTERNAL
-#include <detours.h> // NOTE: ifdef detours.h
-#endif
-#include <handleapi.h>
-#include <iostream>
-#include <memory>
-#ifndef PCONTEXT
-#define PCONTEXT
-#define pContextRecord
-#include <processthreadsapi.h>
-#include <windows.h>
-#include <winnt.h>
-#endif // !_CONTEXT
-#endif
 
 #ifdef DETOURS_ORCV2
 
@@ -65,6 +37,15 @@ __declspec(noreturn) void Handle_Api_Failure(const char *api) {
   }
 
   ExitProcess(1);
+}
+
+inline const uint16_t fetch_entrylist_opcode(intptr_t *opcode_ptr) {
+  uint16_t opcode = (uint16_t)opcode_ptr[0];
+
+  if (opcode >= 0xe800)
+    opcode = (opcode << 16) | (uint16_t)opcode_ptr[2];
+
+  return opcode;
 }
 
 #endif // !DETOURS_ORCV2
