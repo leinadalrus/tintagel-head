@@ -33,6 +33,9 @@
 #endif // !_CONTEXT
 #endif
 
+#ifndef NDEBUG_VARIADIC_ARGS_HPP
+#define NDEBUG_VARIADIC_ARGS_HPP
+
 #define ASSERT_VA_ARGS(_str)                                                   \
   {                                                                            \
     if (!(__VA_ARGS__))                                                        \
@@ -47,3 +50,5 @@ void assert_message(const char *sz_message, const char *sz_file,
                     unsigned long xn_line) {
   printf("%s in %s, line %ld", sz_message, sz_file, xn_line);
 }
+
+#endif // !NDEBUG_VARIADIC_ARGS_HPP
