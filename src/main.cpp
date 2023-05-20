@@ -11,9 +11,10 @@
 #endif // !_WIN32 ||  !__linux__
 
 #include "../inc/components.hpp"
+#include "../inc/handling.hpp"
 
 int main() {
-  InitWindow(600, 400, "High Hunt");
+  InitWindow(600, 400, "Tintagel Head");
   Camera2D camera = {0};
 
   while (!WindowShouldClose()) {
