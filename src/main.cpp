@@ -1,10 +1,17 @@
+#if _WIN32
+#include <C:\\raylib\\raylib\\src\\raylib.h>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+#elif __linux__
 #include <raylib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#endif // !_WIN32 ||  !__linux__
 
 class Health {
-  int hp; // health points
+  int points; // health points
 };
 
 class Position {
@@ -67,7 +74,7 @@ class FriendlyBundle {
 };
 
 int main() {
-  InitWindow(600, 400, "Inlaid Imperial");
+  InitWindow(600, 400, "High Hunt");
   Camera2D camera = {0};
 
   while (!WindowShouldClose()) {
