@@ -10,68 +10,7 @@
 #include <stdlib.h>
 #endif // !_WIN32 ||  !__linux__
 
-class Health {
-  int points; // health points
-};
-
-class Position {
-  Vector2 x, y;
-};
-
-class PlayerEntity {};
-
-class PlayerName {};
-
-class PlayerSprite {
-  Rectangle dimensions;
-  Texture texture;
-};
-
-class PlayerBundle {
-  PlayerEntity entity;
-  PlayerName name;
-  PlayerSprite sprite;
-  Health health;
-  Position position;
-};
-
-class EnemyEntity {};
-
-class EnemyName {
-  const char *name;
-};
-
-class EnemySprite {
-  Rectangle dimensions;
-  Texture texture;
-};
-
-class EnemyBundle {
-  EnemyEntity entity;
-  EnemyName name;
-  EnemySprite sprite;
-  Health health;
-  Position position;
-};
-
-class FriendlyEntity {};
-
-class FriendlyName {
-  const char *name;
-};
-
-class FriendlySprite {
-  Rectangle dimensions;
-  Texture texture;
-};
-
-class FriendlyBundle {
-  FriendlyEntity entity;
-  FriendlyName name;
-  FriendlySprite sprite;
-  Health health;
-  Position position;
-};
+#include "../inc/components.hpp"
 
 int main() {
   InitWindow(600, 400, "High Hunt");
