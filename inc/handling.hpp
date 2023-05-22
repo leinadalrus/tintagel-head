@@ -1,3 +1,6 @@
+#ifndef HANDLING_HPP
+#define HANDLING_HPP
+
 #if _WIN32
 #include <C:\\raylib\\raylib\\src\\raylib.h>
 #include <cstdint>
@@ -12,42 +15,51 @@
 
 #include "components.hpp"
 
-enum OpcodeMessages {
+enum class OpcodeMessages {
   ZERO = 0x0,
   XXV = 0x25,
   FF = 0xFF,
 };
 
-typedef struct Command {
-} Command;
+class Command {
+public:
+  virtual ~Command() {}
+  virtual void execute() = 0;
+};
 
-typedef struct AttackCommand {
-  Command *command;
-} AttackCommand;
+class AttackCommand : public Command {
+  int attack();
 
-typedef struct DelayCommand {
-  Command *command;
-} DelayCommand;
+public:
+  virtual void execute() { attack(); }
+};
 
-typedef struct SustainCommand {
-  Command *command;
-} SustainCommand;
+class DelayCommand : public Command {
+  int delay();
 
-typedef struct ReleaseCommand {
-  Command *command;
-} ReleaseCommand;
+public:
+  virtual void execute() { delay(); }
+};
 
-typedef struct Handler {
-  Command *command;
-} Handler;
+class SustainCommand : public Command {
+  int sustain();
 
-typedef struct InputHandler { // Command Input Bundle(d)
-  Handler *handler;
+public:
+  virtual void execute() { sustain(); }
+};
+
+class ReleaseCommand : public Command {
+  int release();
+
+public:
+  virtual void execute() { release(); }
+};
+
+class InputHandler { // Command Input Bundle(d)
   AttackCommand attack_command;
   DelayCommand delay_command;
   SustainCommand sustain_command;
   ReleaseCommand release_Command;
-} InputHandler;
+};
 
-void execute_command(Command *command_dx);
-int handle_input(Handler *handle_index);
+#endif // !HANDLING_HPP

@@ -35,7 +35,9 @@ class Position {
 
 class PlayerEntity {};
 
-class PlayerName {};
+class PlayerName {
+  const char *name;
+};
 
 class PlayerSprite {
   Rectangle dimensions;
