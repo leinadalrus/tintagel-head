@@ -34,6 +34,27 @@ public:
   virtual void execute() { attack(); }
 };
 
+class BlockCommand : public Command {
+  int block();
+
+public:
+  virtual void execute() { block(); }
+};
+
+class ConsumeCommand : public Command {
+  int consume();
+
+public:
+  virtual void execute() { consume(); }
+};
+
+class CounterCommand : public Command {
+  int counter();
+
+public:
+  virtual void execute() { counter(); }
+};
+
 class DelayCommand : public Command {
   int delay();
 
@@ -48,6 +69,13 @@ public:
   virtual void execute() { sustain(); }
 };
 
+class SwapCommand : public Command {
+  int swap();
+
+public:
+  virtual void execute() { swap(); }
+};
+
 class ReleaseCommand : public Command {
   int release();
 
@@ -60,6 +88,13 @@ class InputHandler { // Command Input Bundle(d)
   DelayCommand delay_command;
   SustainCommand sustain_command;
   ReleaseCommand release_Command;
+};
+
+class ActionHandler { // Action Input Bundle(d)
+  BlockCommand block_command;
+  ConsumeCommand consume_command;
+  CounterCommand counter_command;
+  SwapCommand swap_command;
 };
 
 #endif // !HANDLING_HPP
