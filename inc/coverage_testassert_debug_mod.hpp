@@ -1,6 +1,12 @@
 #ifndef COVERAGE_TESTASSERT_DEBUG_MOD_HPP
 #define COVERAGE_TESTASSERT_DEBUG_MOD_HPP
 
+enum FileCodeCoverts {
+  RESERVE_FLAG,
+  CURRENT_COLUMN,
+  SHORT_OFFSET,
+};
+
 #ifndef DXINPUT_TESTASSERT_VARGS
 #define DXINPUT_TESTASSERT_VARGS(_f, _b, ...)                                  \
   {                                                                            \
@@ -25,7 +31,7 @@
 #define COVER_TESTASSERT_IF(_ifstate, _str, ...)                               \
   {                                                                            \
     if (#_ifstate || #_str == "if") {                                          \
-      switch (__LINE__) {                                                      \
+      switch (CURRENT_COLUMN) {                                                \
       case _ifstate:                                                           \
       case _str:                                                               \
       default:                                                                 \
@@ -40,7 +46,7 @@
 #define COVER_TESTASSERT_FOR(_forloop, _str, ...)                              \
   {                                                                            \
     if (#_forloop || #_str == "for") {                                         \
-      switch (__LINE__) {                                                      \
+      switch (CURRENT_COLUMN) {                                                \
       case _forloop:                                                           \
       case _str:                                                               \
       default:                                                                 \
@@ -55,7 +61,7 @@
 #define COVER_TESTASSERT_WHILE(_whileloop, _str, ...)                          \
   {                                                                            \
     if (#_whileloop || #_str == "while") {                                     \
-      switch (__LINE__) {                                                      \
+      switch (CURRENT_COLUMN) {                                                \
       case _whileloop:                                                         \
       case _str:                                                               \
       default:                                                                 \
@@ -66,11 +72,11 @@
   }
 #endif // !COVER_TESTASSERT_WHILE
 
-#ifndef COVER_TESTASSERT_ANYOPAQUE
-#define COVER_TESTASSERT_ANYOPAQUE(_opaqueswitch, _str, ...)                   \
+#ifndef COVER_TESTASSERT_SWITCHSTATE
+#define COVER_TESTASSERT_SWITCHSTATE(_opaqueswitch, _str, ...)                 \
   {                                                                            \
     if (#_opaqueswitch || #_str == "switch") {                                 \
-      switch (__LINE__) {                                                      \
+      switch (CURRENT_COLUMN) {                                                \
       case _opaqueswitch:                                                      \
       case _str:                                                               \
       default:                                                                 \
@@ -80,5 +86,5 @@
     }                                                                          \
   }
 
-#endif // !COVER_TESTASSERT_ANYOPAQUE
+#endif // !COVER_TESTASSERT_SWITCHSTATE
 #endif // !COVERAGE_TESTASSERT_DEBUG_MOD_HPP

@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstdlib>
 #elif __linux__
+#include <assert.h>
 #include <raylib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -22,8 +23,8 @@
 #include "../lib/powerpc_virtual_storage_model.h"
 
 #ifdef ASSERT_VARGS
-#define ASSERT_VARGS(_str, ...) // redefined for re-use
-#endif                          // !ASSERT_VARGS
+// #define ASSERT_VARGS(_str, ...) // redefined for re-use
+#endif // !ASSERT_VARGS
 // extern ASSERT_VARGS(_str, ...)
 
 #define __iomem                                                                \
@@ -33,32 +34,25 @@
 
 uint16_t read_virtual_enumerated_header(
     struct PpuOffsetLookasideBuffer *address_offset) {
-  int is_enabled = 0; // = dev_info->virtual_device_data->destination & BIT(0);
   uint64_t ret_val = 0;
-  const char *io_insertions;
 
   FILE *ifloop_file, *switchstate_file;
   DecryptedCommandBufferTree *command_buffer_tree;
-
-  if (is_enabled == 0) {
-    fprintf(stderr, "Devisor is disabled!\n");
-    ret_val = 0;
-  }
-  COVER_TESTASSERT_IF(0, is_enabled, io_insertions, ifloop_file);
+  COVER_TESTASSERT_IF(CURRENT_COLUMN, SHORT_OFFSET, ifloop_file->_cur_column);
 
   switch (address_offset->rb_status_code) {
   case SUCCESS:
-  case INVALID_LENGTH:
-  case INACTIVE:
     ret_val =
         (uint64_t)
             address_offset->ppe_translation_lookaside_buffer.address_offset;
+    assert(address_offset->rb_status_code);
+    assert(SUCCESS);
 
   default:
     ret_val = 1;
   }
-  COVER_TESTASSERT_ANYOPAQUE(SUCCESS, address_offset->rb_status_code,
-                             io_insertions, switchstate_file);
+  COVER_TESTASSERT_SWITCHSTATE(CURRENT_COLUMN, SHORT_OFFSET, SUCCESS,
+                               address_offset->rb_status_code);
 
   return ret_val;
 }
@@ -66,11 +60,8 @@ uint16_t read_virtual_enumerated_header(
 uint16_t
 write_into_enumerated_header(struct PpuOffsetLookasideBuffer *address_offset,
                              int io_insertions, FILE *buffer_file) {
-  int is_enabled = 0;
   FILE *ifloop_file = buffer_file, *switchstate_file = buffer_file;
-  COVER_TESTASSERT_IF(0, is_enabled, io_insertions, ifloop_file);
-  COVER_TESTASSERT_ANYOPAQUE(SUCCESS, address_offset->rb_status_code,
-                             io_insertions, switchstate_file);
+  COVER_TESTASSERT_IF(CURRENT_COLUMN, SHORT_OFFSET, ifloop_file);
   return 0;
 }
 
