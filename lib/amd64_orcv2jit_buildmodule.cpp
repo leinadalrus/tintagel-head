@@ -3,12 +3,11 @@
 #pragma warning(disable : 6102 6103)
 #endif
 
-#include "../inc/ndebug_variadic_args.hpp"
+#include "../inc/ndebug_testassert_messages.h"
 #include "amd64_orcv2jit_function_offload.hpp"
 
-#ifdef DETOURS_ORCV2
-
-extern "C" BYTE Speppe_Entry_Codes[]; // SPE into PPE Entry Codes
+extern "C" const char *PpuEntries[]; // SPU into PPU Entry Codes
+extern "C" const char *SpuEntries[]; // SPU into PPU Entry Codes
 
 // Build-module with DLL
 // class BuildmoduleJit {
@@ -47,5 +46,3 @@ inline const uint16_t fetch_entrylist_opcode(intptr_t *opcode_ptr) {
 
   return opcode;
 }
-
-#endif // !DETOURS_ORCV2
