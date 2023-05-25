@@ -1,9 +1,14 @@
-#ifndef libgxxJIT_INTERPRETER_HPP
-#define libgxxJIT_INTERPRETER_HPP
+#ifndef LIBGXXJIT_INTERPRETER_HPP
+#define LIBGXXJIT_INTERPRETER_HPP
 
-#include "function_offload_phantom_marker.hpp"
 #include "cellbe_function_offload_hook.hpp"
+#include "function_offload_phantom_marker.hpp"
+
+#if _WIN32
 #include <cstdint>
+#elif __linux__
+#include <stdint.h>
+#endif
 
 #ifdef LIBGXXJIT_INTERPRETER_HPP
 extern int libgxxjit_interpreter_toggle;

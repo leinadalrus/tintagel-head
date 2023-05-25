@@ -1,5 +1,6 @@
 #include "libgxxjit_interpreter.hpp"
 #include "cellbe_treewalk_linter.hpp" // this contains the ArenaState classes
+#include <asmjit/asmjit.h>
 // need to have this include file separated
 // and outside of include guards
 
@@ -15,6 +16,7 @@ extern int libgxxjit_interpreter_toggle;
 #include <string.h>
 #endif
 
+typedef int (*OffloadHook)(void);
 void load_initialized_coreboot_bios() {}
 
 int get_libgxxmemory_region(uint32_t address, int is_written,
@@ -84,3 +86,30 @@ void reset_external_jit_interpreter(LibgxxJitInterpreter *interpreter) {
 void start_external_jit_interpreter(LibgxxJitInterpreter *interpreter) {}
 
 void stop_external_jit_interpreter(LibgxxJitInterpreter *interpreter) {}
+
+int exec_external_jit_interpreter(int argc, char *argv[]) {
+  asmjit::JitRuntime jit_rt;
+  asmjit::CodeHolder code_holder;
+  code_holder.init(jit_rt.environment(), jit_rt.cpuFeatures());
+  asmjit::x86::Assembler assembler(&code_holder);
+
+  assembler.mov(asmjit::x86::eax, 1);
+  assembler.ret();
+
+  OffloadHook fn_hook1;
+  asmjit::Error err = jit_rt.add(&fn_hook1, &code_holder);
+
+  if (err) {
+    printf("AsmJit failed: %s\n", asmjit::DebugUtils::errorAsString(err));
+    return 1;
+  }
+
+  code_holder.reset(); // explicitly free CodeHolder's content
+
+  int result = fn_hook1();
+  printf("%d\n", result);
+
+  jit_rt.release(fn_hook1);
+
+  return 0;
+}
