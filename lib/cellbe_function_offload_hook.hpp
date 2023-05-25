@@ -1,5 +1,5 @@
-#ifndef SPE_FUNCTION_OFFLOAD_HOOK_HPP
-#define SPE_FUNCTION_OFFLOAD_HOOK_HPP
+#ifndef CELLBE_FUNCTION_OFFLOAD_HOOK_HPP
+#define CELLBE_FUNCTION_OFFLOAD_HOOK_HPP
 
 #include <cstdint>
 #include <cstdio>
@@ -16,4 +16,4 @@ typedef struct SpeRootRemnant {
                       // ... transforming for a PPE Stub.
 } SpeRootRemnant;
 
-#endif // SPE_FUNCTION_OFFLOAD_HOOK_HPP
+#endif // CELLBE_FUNCTION_OFFLOAD_HOOK_HPP

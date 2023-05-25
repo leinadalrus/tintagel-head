@@ -1,10 +1,9 @@
-#pragma warning(pop)
 #if _MSC_VER > 1400
 #pragma warning(disable : 6102 6103)
 #endif
 
 #include "../inc/ndebug_testassert_messages.h"
-#include "amd64_orcv2jit_function_offload.hpp"
+#include "cellbe_function_offload_model.hpp"
 
 extern "C" const char *PpuEntries[]; // SPU into PPU Entry Codes
 extern "C" const char *SpuEntries[]; // SPU into PPU Entry Codes
@@ -18,25 +17,6 @@ extern "C" const char *SpuEntries[]; // SPU into PPU Entry Codes
 //   IRCompileLayer ircompile_layer;
 //   JITDylib &main_dynamic_library;
 // };
-
-HANDLE Hwnd_Child_Process = nullptr;
-HANDLE Hwnd_Child_Thread = nullptr;
-
-__declspec(noreturn) void Handle_Api_Failure(const char *api) {
-  DWORD last_error = GetLastError();
-  std::cout << "Payload Executable:\t" << api << "\nfailed: #[(" << last_error
-            << ")]" << std::endl;
-
-  if (Hwnd_Child_Thread != NULL)
-    CloseHandle(Hwnd_Child_Thread);
-
-  if (Hwnd_Child_Process != NULL) {
-    TerminateProcess(Hwnd_Child_Process, 1);
-    CloseHandle(Hwnd_Child_Process);
-  }
-
-  ExitProcess(1);
-}
 
 inline const uint16_t fetch_entrylist_opcode(intptr_t *opcode_ptr) {
   uint16_t opcode = (uint16_t)opcode_ptr[0];

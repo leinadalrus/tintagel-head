@@ -1,5 +1,5 @@
-#ifndef SPU_TREEWALK_LINTER_HPP
-#define SPU_TREEWALK_LINTER_HPP
+#ifndef CELLBE_TREEWALK_LINTER_HPP
+#define CELLBE_TREEWALK_LINTER_HPP
 
 #include <cstdint>
 #include <cstdio>
@@ -94,4 +94,4 @@ protected:
                                   // inherited classes
 };
 
-#endif // SPU_TREEWALK_LINTER_HPP
+#endif // CELLBE_TREEWALK_LINTER_HPP
