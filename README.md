@@ -6,6 +6,8 @@
 Experimental project in creating a basic UI in Raylib 4.5 for the sake of Digital Signal Processing and Audio Streaming/Handling.
 _One side of me is like intralogue-ing on the idea I should just use ImGui, but the problem with ImGui is that it doesn't have Emscripten support for web-browser usage._
 
+I've come to an epiphany that I should possibly direct this project into creating an accessible kind of "Flash" and "ActionScript" alternative to what modern web browsers currently offer. I hope I can garner more help and create a headless API for the project.
+
 ##### Why not Yew and Tauri?
 _Yew and Tauri for Rust would also work really well, but it's the fact in which there's so much magic happening within Yew and Tauri that I won't be able to pull off what I need to do. 
 <br>
@@ -21,7 +23,8 @@ David Tolnay's CXX is used for multi-language tiers of the project.
 
 - I have C++14 code in the high-level programming tiers of the project because it's _"safer."_
 - It also helps if we in turn have to 'interop' with another user's C++ code, especially with Soloud being unupdated for years.
-- 'C99' itself will not allow us to write code in a modern sense with polymorphism/inheritance.
+- 'C99' itself will not allow us to write code in a modern sense with polymorphism/inheritance. But will still be utilised for ARM vs x86_64 architecture interpreter(s) and compiler(s).
+- Procedural programming with some _this and that_ of functional and object-oriented programming would be nice. (_Oooooh_ maybe data-oriented programming as well!?)
 - At some point of the program we'll need to use a Strategy design pattern with a Singleton since we're working with-
   -peripherals after all.
 
@@ -31,6 +34,10 @@ David Tolnay's CXX is used for multi-language tiers of the project.
 
 - We can also test minimally. Testing for trivially but ideal unit tests before doing any form of non-context-free-
   -programming with how software revolves with Singletons combined with Strategy patterns sometimes.
+  
+#### `ASMJIT` for ASM & ARM Interpreter / Compiler
+
+I have also decided to use "ASMJIT" and will update the JIT interpreter and compiler in the future. Right now I just need to get Raylib and a makeshift game to work with WebGL2 or WebGPU and then further develop the project from there.
 
 ##### The general idea as-of-now...
 
