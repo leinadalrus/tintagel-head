@@ -1,46 +1,69 @@
-pub mod client;
-pub mod server;
+mod client;
+mod server;
 
-use leptos::{leptos_dom::ev::SubmitEvent, *};
+use crate::server::components::{
+    dashboard_card_template::DashboardCardView,
+    dashboard_template_user::DashboardTemplating,
+    markdown_editor_user::DocumentMarkups,
+};
 
-#[cxx::bridge]
-mod ffi {
-    unsafe extern "C++" {
-        unsafe fn invoke(cmd: &str, args: isize);
+use leptos::*;
+use leptos_meta::*;
+use leptos_router::*;
+
+#[derive(Debug, Clone, thiserror::Error)]
+pub enum AppErrors {
+    #[error("Not Found")]
+    NotFound,
+    #[error("Internal Server Error")]
+    InternalServerError,
+}
+
+impl AppErrors {
+    pub fn status_code(&self) -> reqwest::StatusCode {
+        match self {
+            AppErrors::NotFound => reqwest::StatusCode::NOT_FOUND,
+            AppErrors::InternalServerError => {
+                reqwest::StatusCode::INTERNAL_SERVER_ERROR
+            }
+        }
+    }
+}
+
+pub fn result_into_error(
+    cx: Scope, errors: Option<RwSignal<Errors>>,
+) -> leptos::RwSignal<leptos::Errors> {
+    let Some(errors) = errors else {
+        panic!("Expected errors! No errors found!?");
+    };
+
+    errors
+}
+
+#[component]
+pub fn NavRoute(cx: Scope) -> impl IntoView {
+    view! {cx,
+        <>
+        <head>
+        <Stylesheet id="leptos" href="/pkg/index.css" />
+        <Meta name="dashboard" content="Novelite Web-novels' Dashboard component" />
+        <Router>
+        <nav>
+        <A href = "about" class=move || "about">"About"</A>
+        </nav>
+        <main>
+        <Routes>
+        <Route path="markdowns/:id" view=move |cx| view! {cx, <DocumentMarkups />} />
+        <Route path=":markdowns?" view=move |cx| view! {cx, <DashboardTemplating />} />
+        </Routes>
+        </main>
+        </Router>
+        </head>
+        </>
     }
 }
 
 #[component]
-fn HandleAnimationBlock(cx: Scope, data_size: i64) -> impl IntoView {
-    let (command, set_command) = create_signal(cx, String::new());
-    let (argument, set_argument) = create_signal(cx, usize::MIN);
-    let cmd; // TODO
-    let args; // TODO
-
-    let update_argument = move |ev| {
-        let v = event_target_value(&ev);
-        set_argument;
-    };
-
-    let command_event = move |ev: SubmitEvent| {
-        ev.prevent_default();
-        spawn_local(async move {
-            if ev.default_prevented() {
-                return;
-            }
-
-            // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-            ffi::invoke(cmd, args);
-        });
-    };
-
-    view! { cx,
-        <main class="container">
-            <p><b>{ move || command.get() }</b></p>
-        </main>
-    }
-}
-
-fn main() {
-    mount_to_body(|ctx| view! { ctx, <HandleAnimationBlock data_size=0 /> })
+pub fn App(cx: Scope) -> impl IntoView {
+    view! {cx, <NavRoute />}
 }

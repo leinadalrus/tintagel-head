@@ -1,9 +1,11 @@
-#ifndef AMD64_COMMAND_BUFFER_HANDLER_H
-#define AMD64_COMMAND_BUFFER_HANDLER_H
+#ifndef AMD_COMMAND_BUFFER_HANDLER_H
+#define AMD_COMMAND_BUFFER_HANDLER_H
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "function_offload_phantom_marker.h"
 
 typedef struct PhantomMarker {
   char *token_byte;
@@ -13,12 +15,12 @@ typedef struct PhantomMarker {
 } PhantomMarker;
 
 typedef struct DecryptedCommandBufferCursor {
-  PhantomMarker phantom_marker[sizeof(char)][sizeof(char)]; // reference-based
+  PhantomMarker phantom_marker[VECTOR_SLICE_CHUNK][VECTOR_SLICE_CHUNK]; // reference-based
                                                             //
 } DecryptedCommandBufferCursor;
 
 typedef struct DecryptedCommandBufferTree {
-  PhantomMarker phantom_sizes[sizeof(char)][sizeof(char)]; // note: need matrix
+  PhantomMarker phantom_sizes[VECTOR_SLICE_CHUNK][VECTOR_SLICE_CHUNK]; // note: need matrix
                                                            //
 } DecryptedCommandBufferTree;
 
@@ -52,4 +54,4 @@ int read_handled_context_argument(int (*interface_handle_callback)(),
                                   char *user_data_header,
                                   signed int status_flag, uint64_t data_size);
 
-#endif // AMD64_COMMAND_BUFFER_HANDLER_H
+#endif // AMD_COMMAND_BUFFER_HANDLER_H

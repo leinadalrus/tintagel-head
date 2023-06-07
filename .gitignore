@@ -2,8 +2,8 @@
 /build
 /target
 /dist
-*ext/**
-# /lib
+/ext
+/lib
 # /.infra/**
 *.log*
 *.exe*
