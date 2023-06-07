@@ -1,9 +1,9 @@
-#ifndef AMD64_COMMAND_RING_BUFFER_H
-#define AMD64_COMMAND_RING_BUFFER_H
+#ifndef AMD_COMMAND_RING_BUFFER_H
+#define AMD_COMMAND_RING_BUFFER_H
 
 #include "amd64_command_buffer_handler.h"
 
-enum RbStatusCodes {
+enum RingBufferStatusCodes {
   SUCCESS = 0x0000, // possibly change bytecode for bitwise ops
   INVALID_PLATFORM_STATE = 0x0001,
   INVALID_GUEST_STATE = 0x0002,
@@ -58,4 +58,4 @@ typedef struct ArbitraryNetwork {
   struct Chord_t *chord_t;
 } ArbitraryNetwork;
 
-#endif // AMD64_COMMAND_RING_BUFFER_H
+#endif // AMD_COMMAND_RING_BUFFER_H

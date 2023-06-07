@@ -1,6 +1,0 @@
-#ifndef AMD64_MAILBOX_PROTOCOL_HANDLER_HPP
-#define AMD64_MAILBOX_PROTOCOL_HANDLER_HPP
-
-#include "amd64_hypervisor_guest_policy.h"
-
-#endif // AMD64_MAILBOX_PROTOCOL_HANDLER_HPP
