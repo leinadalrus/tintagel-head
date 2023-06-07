@@ -25,15 +25,13 @@ David Tolnay's CXX is used for multi-language tiers of the project.
 - It also helps if we in turn have to 'interop' with another user's C++ code, especially with Soloud being unupdated for years.
 - 'C99' itself will not allow us to write code in a modern sense with polymorphism/inheritance. But will still be utilised for ARM vs x86_64 architecture interpreter(s) and compiler(s).
 - Procedural programming with some _this and that_ of functional and object-oriented programming would be nice. (_Oooooh_ maybe data-oriented programming as well!?)
-- At some point of the program we'll need to use a Strategy design pattern with a Singleton since we're working with-
-  -peripherals after all.
+- At some point in the program we'll need to use a Strategy design pattern with a Singleton since we're working with peripherals after all.
 
 #### `libc`
 
 'libc' enables us to 'interop' with the C code of PortAudio and 'libsndfile' which helps us do some explorative programming.
 
-- We can also test minimally. Testing for trivially but ideal unit tests before doing any form of non-context-free-
-  -programming with how software revolves with Singletons combined with Strategy patterns sometimes.
+- We can also test minimally. Testing for trivially but ideal unit tests before doing any form of non-context-free programming with how software revolves with Singletons combined with Strategy patterns sometimes.
   
 #### `ASMJIT` for ASM & ARM Interpreter / Compiler
 
