@@ -48,4 +48,4 @@ I have also decided to use "ASMJIT" and will update the JIT interpreter and comp
 C++14 is also employed because I love C, alas C++ enables us to use OOP practices better to practice (preferably Composition over Inheritance),
 but I tend to shoot myself in the foot with it anyways, which is as to why am experimenting with new and old technologies.
 
-I will still use C, especially since writing Structures-of-Arrays in C is great, and fun to write function pointer with.
+I will still use C, especially since writing Structures-of-Arrays in C is great, and fun to write function pointers with.
